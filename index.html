@@ -838,25 +838,15 @@
     <section class="hero">
         <div class="container hero-content">
             <div class="hero-text">
-                <h1>Votre projet mérite de voir le jour</h1>
+                <h1>Construit ton projet, Ecrit ton avenir </h1>
                 <p class="hero-lead">Arrêtez de rêver seul, passez à l'action avec SUCCESS+</p>
                 
                 <div class="hero-highlight">
                     <p>TON RÊVE, C'EST DE FAIRE DES MILLIONS... MAIS TON PROJET VAUT-IL MÊME 1 € AUJOURD'HUI ?</p>
                 </div>
                 
-                <p>La vérité est simple :</p>
-                <p>✅ Un projet mal structuré ne vaut rien.</p>
-                <p>✅ Une idée sans méthode ne convainc personne.</p>
-                <p>✅ Un rêve sans plan reste un fantasme.</p>
-                
-                <p>Chez SUCCESS+, nous transformons vos idées en valeur concrète :</p>
-                <p>👉 Une valeur que les investisseurs comprennent</p>
-                <p>👉 Une valeur qui inspire confiance</p>
-                <p>👉 Une valeur qui donne envie de collaborer</p>
-                
                 <div class="date-badge">
-                    <i class="fas fa-calendar-alt"></i> Formation démarre le 28 Juillet - Places limitées
+                    <i class="fas fa-calendar-alt"></i> Prochaine session démarre le 28 Juillet - Places limitées
                 </div>
                 
                 <button class="btn open-modal-btn">Réserver ma place</button>
@@ -1148,8 +1138,8 @@
                     <h3>Liens rapides</h3>
                     <ul class="footer-links">
                         <li><a href="#services">Nos services</a></li>
-                        <li><a href="#formations">Formations</a></li>
-                        <li><a href="#testimonials">Témoignages</a></li>
+                        <li><a href="#formations">Formations</a></li>         
+                       <!-- <li><a href="#testimonials">Témoignages</a></li>  -->
                         <li><a href="#">Blog</a></li>
                     </ul>
                 </div>
@@ -1158,11 +1148,11 @@
                     <h3>Contact</h3>
                     <div class="contact-info">
                         <i class="fas fa-map-marker-alt"></i>
-                        <div>123 Rue du Succès, 75000 Paris</div>
+                        <div>Tripperie 11, Mons, Belgium</div>
                     </div>
                     <div class="contact-info">
                         <i class="fas fa-phone"></i>
-                        <div>+33 1 23 45 67 89</div>
+                        <div>+32 4 75 33 14 26</div>
                     </div>
                     <div class="contact-info">
                         <i class="fab fa-whatsapp"></i>
@@ -1170,13 +1160,13 @@
                     </div>
                     <div class="contact-info">
                         <i class="fas fa-envelope"></i>
-                        <div>contact@successplus.org</div>
+                        <div>success.ONG@outlook.be</div>
                     </div>
                 </div>
             </div>
             
             <div class="copyright">
-                &copy; 2023 SUCCESS+. Tous droits réservés.
+                &copy; 2025 SUCCESS+. Tous droits réservés.
             </div>
         </div>
     </footer>
@@ -1192,7 +1182,7 @@
                 <h3 class="form-title">Réservez votre place</h3>
                 <p class="form-subtitle">Formation démarre le 28 Juillet - Places limitées</p>
                 
-                <form id="contact-form">
+                <form id="contact-form" action="process.php" method="POST">
                     <div class="form-group">
                         <label for="name">Nom complet</label>
                         <i class="fas fa-user form-icon"></i>
@@ -1283,14 +1273,48 @@
         form.addEventListener('submit', function(e) {
             e.preventDefault();
             
-            // Simulation d'envoi réussi
-            alert('Merci pour votre inscription ! Nous vous contacterons très rapidement pour confirmer votre place à la formation du 28 juillet.');
-            form.reset();
+            // Récupérer les données du formulaire
+            const formData = new FormData(form);
             
-            // Fermer la modale
-            modalOverlay.classList.remove('active');
-            document.body.classList.remove('modal-open');
+            // Afficher un indicateur de chargement
+            const submitBtn = form.querySelector('button[type="submit"]');
+            const originalBtnText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Envoi en cours...';
+            submitBtn.disabled = true;
+            
+            // Envoyer les données au backend PHP
+            fetch('process.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Afficher un message de succès
+                    alert(data.message);
+
+                    // Fermer la modale
+                    modalOverlay.classList.remove('active');
+                    document.body.classList.remove('modal-open');
+                    
+                    // Réinitialiser le formulaire
+                    form.reset();
+                } else {
+                    // Afficher un message d'erreur
+                    alert('Erreur: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Erreur:', error);
+                alert('Une erreur est survenue. Veuillez réessayer.');
+            })
+            .finally(() => {
+                // Restaurer le bouton
+                submitBtn.innerHTML = originalBtnText;
+                submitBtn.disabled = false;
+            });
         });
+            
         
         // Animation au défilement
         document.addEventListener('DOMContentLoaded', function() {
