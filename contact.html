@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SUCCESS+ - Contact</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&family=Raleway:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #FF6B00;
+            --primary-dark: #E55E00;
+            --secondary: #28A745;
+            --secondary-dark: #218838;
+            --accent: #FFC107;
+            --dark: #212529;
+            --light: #F8F9FA;
+            --gray: #6C757D;
+            --transition: all 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Raleway', sans-serif;
+            color: white;
+            line-height: 1.7;
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #0c1a25 0%, #0a1420 100%);
+            position: relative;
+            min-height: 100vh;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(255, 107, 0, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(40, 167, 69, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 50% 50%, rgba(255, 193, 7, 0.05) 0%, transparent 30%);
+            z-index: -2;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 1.5rem 0;
+            background: rgba(10, 20, 30, 0.85);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            transition: var(--transition);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: white;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .logo i {
+            margin-right: 12px;
+            color: var(--accent);
+            font-size: 2.5rem;
+            text-shadow: 0 0 15px rgba(255, 193, 7, 0.5);
+        }
+
+        .logo span {
+            color: var(--primary);
+            position: relative;
+        }
+
+        .logo span::after {
+            content: '+';
+            color: var(--secondary);
+            font-size: 1.8rem;
+            position: absolute;
+            top: -0.5rem;
+            right: -1rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 2.5rem;
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: white;
+        }
+
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: var(--primary);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover:after, .nav-links a.active:after {
+            width: 100%;
+        }
+
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(255, 107, 0, 0.4);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .btn:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%);
+            opacity: 0;
+            transition: var(--transition);
+            z-index: -1;
+        }
+
+        .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(255, 107, 0, 0.6);
+        }
+
+        .btn:hover:before {
+            opacity: 1;
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, var(--secondary) 0%, #2dd159 100%);
+            box-shadow: 0 5px 20px rgba(40, 167, 69, 0.4);
+        }
+
+        .btn-secondary:hover {
+            box-shadow: 0 10px 30px rgba(40, 167, 69, 0.6);
+        }
+
+        /* Page Contact */
+        .page-header {
+            padding: 12rem 0 6rem;
+            text-align: center;
+            background: linear-gradient(rgba(10, 20, 30, 0.9), rgba(10, 20, 30, 0.7)),
+                url('https://images.unsplash.com/photo-1587560699334-cc4ff634909a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .page-header h1 {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .page-header p {
+            font-size: 1.5rem;
+            max-width: 800px;
+            margin: 0 auto;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .contact-container {
+            padding: 6rem 0;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+        }
+
+        .contact-info {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 25px;
+            padding: 3rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: var(--shadow);
+        }
+
+        .contact-info h2 {
+            font-size: 2.2rem;
+            margin-bottom: 2rem;
+            color: var(--accent);
+        }
+
+        .contact-details {
+            margin-bottom: 3rem;
+        }
+
+        .contact-item {
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+        }
+
+        .contact-item i {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-top: 0.3rem;
+        }
+
+        .contact-item div h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .contact-item div p {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-radius: 50%;
+            transition: var(--transition);
+            font-size: 1.3rem;
+        }
+
+        .social-links a:hover {
+            background: var(--primary);
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(255, 107, 0, 0.4);
+        }
+
+        .contact-form {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 25px;
+            padding: 3rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: var(--shadow);
+        }
+
+        .contact-form h2 {
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent);
+        }
+
+        .contact-form p {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 2rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.8rem;
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 1.2rem 1.5rem;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: white;
+            font-size: 1.1rem;
+            transition: var(--transition);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.2);
+        }
+
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        /* Map Section */
+        .map {
+            padding: 0 0 6rem;
+        }
+
+        .map h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: var(--accent);
+        }
+
+        .map-container {
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 450px;
+            border: none;
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal {
+            background: linear-gradient(135deg, #1a2a3a 0%, #0c1a25 100%);
+            border-radius: 25px;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            position: relative;
+            transform: translateY(-50px);
+            transition: transform 0.5s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+        }
+
+        .modal-overlay.active .modal {
+            transform: translateY(0);
+        }
+
+        .modal-header {
+            padding: 2rem;
+            background: rgba(0, 0, 0, 0.3);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 2rem;
+            color: var(--accent);
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .close-modal:hover {
+            color: var(--primary);
+            transform: rotate(90deg);
+        }
+
+        .modal-body {
+            padding: 3rem;
+        }
+
+        .form-title {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            color: white;
+            text-align: center;
+        }
+
+        .form-subtitle {
+            color: var(--accent);
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 1.2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: white;
+            font-size: 1rem;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .success-message {
+            background: rgba(40, 167, 69, 0.2);
+            border: 1px solid var(--secondary);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            display: none;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(5, 10, 15, 0.95);
+            padding: 6rem 0 3rem;
+            position: relative;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 4rem;
+        }
+
+        .footer-col h3 {
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            color: var(--accent);
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        .footer-col h3:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: var(--primary);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 1.2rem;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: var(--transition);
+            font-size: 1.1rem;
+            display: block;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+            transform: translateX(5px);
+        }
+
+        .contact-info-footer {
+            margin-bottom: 1.8rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 1.2rem;
+        }
+
+        .contact-info-footer i {
+            color: var(--secondary);
+            margin-top: 0.3rem;
+            font-size: 1.3rem;
+        }
+
+        .contact-info-footer div {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.1rem;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 3rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 1rem;
+        }
+
+        @media (max-width: 992px) {
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container navbar">
+            <a href="index.html" class="logo">
+                <i class="fas fa-rocket"></i>
+                SUCCESS<span>+</span>
+            </a>
+            
+            <button class="hamburger">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <ul class="nav-links">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="formations.html">Formations</a></li>
+                <li><a href="contact.html" class="active">Contact</a></li>
+                <li><button class="btn open-modal-btn">Inscrivez-vous</button></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Contactez-nous</h1>
+            <p>Nous sommes là pour répondre à toutes vos questions et vous accompagner</p>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-container">
+        <div class="container">
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <h2>Nos coordonnées</h2>
+                    <p>N'hésitez pas à nous contacter pour toute question ou demande d'information.</p>
+                    
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div>
+                                <h3>Adresse</h3>
+                                <p>Tripperie 11, Mons, Belgium</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <i class="fas fa-phone"></i>
+                            <div>
+                                <h3>Téléphone</h3>
+                                <p>+32 4 75 33 14 26</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <i class="fab fa-whatsapp"></i>
+                            <div>
+                                <h3>WhatsApp</h3>
+                                <p>+32 475 33 14 26</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <div>
+                                <h3>Email</h3>
+                                <p>success.ONG@outlook.be</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <i class="fas fa-clock"></i>
+                            <div>
+                                <h3>Horaires</h3>
+                                <p>Lun-Ven: 9h00 - 18h00</p>
+                                <p>Sam: 10h00 - 14h00</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div class="contact-form">
+                    <h2>Envoyez-nous un message</h2>
+                    <p>Remplissez le formulaire ci-dessous et nous vous répondrons dans les plus brefs délais.</p>
+                    
+                    <form id="contact-form-page">
+                        <div class="form-group">
+                            <label for="name">Nom complet</label>
+                            <input type="text" id="name" name="name" required placeholder="Votre nom complet">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required placeholder="votre@email.com">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="subject">Sujet</label>
+                            <select id="subject" name="subject" required>
+                                <option value="">Sélectionnez un sujet</option>
+                                <option value="formation">Demande d'information sur une formation</option>
+                                <option value="partenariat">Proposition de partenariat</option>
+                                <option value="financement">Demande de financement</option>
+                                <option value="autre">Autre demande</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" rows="6" required placeholder="Votre message..."></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn" style="width: 100%;">
+                            <i class="fas fa-paper-plane"></i> Envoyer le message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Map Section -->
+    <section class="map">
+        <div class="container">
+            <h2>Où nous trouver</h2>
+            <div class="map-container">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2529.935807264399!2d3.9501497157411227!3d50.45368367947509!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c3b7d8c5c8e7c5%3A0x1a7d4f0d8c8c8c8c!2sTripperie%2011%2C%207000%20Mons!5e0!3m2!1sfr!2sbe!4v1650000000000!5m2!1sfr!2sbe" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>SUCCESS+</h3>
+                    <p>Construit ton projet, écris ton avenir</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Liens rapides</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Accueil</a></li>
+                        <li><a href="formations.html">Formations</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="#">Blog</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Contact</h3>
+                    <div class="contact-info-footer">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>Tripperie 11, Mons, Belgium</div>
+                    </div>
+                    <div class="contact-info-footer">
+                        <i class="fas fa-phone"></i>
+                        <div>+32 4 75 33 14 26</div>
+                    </div>
+                    <div class="contact-info-footer">
+                        <i class="fab fa-whatsapp"></i>
+                        <div>+32 475 33 14 26</div>
+                    </div>
+                    <div class="contact-info-footer">
+                        <i class="fas fa-envelope"></i>
+                        <div>success.ONG@outlook.be</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                &copy; 2025 SUCCESS+. Tous droits réservés.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal -->
+    <div class="modal-overlay" id="modal-overlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Inscription à la formation</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <h3 class="form-title">Réservez votre place</h3>
+                <p class="form-subtitle">Formation démarre le 18 Août - Places limitées</p>
+                
+                <div class="success-message" id="success-message">
+                    Votre inscription a été enregistrée avec succès! Vous allez recevoir un email de confirmation.
+                </div>
+                
+                <form id="contact-form">
+                    <div class="form-group">
+                        <label for="name">Nom complet</label>
+                        <input type="text" id="name" name="name" required placeholder="Votre nom complet">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required placeholder="votre@email.com">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone">Téléphone</label>
+                        <input type="tel" id="phone" name="phone" required placeholder="+32 4 75 33 14 26">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="formation">Formation choisie</label>
+                        <select id="formation" name="formation" required>
+                            <option value="">Sélectionnez une formation</option>
+                            <option value="Développement web et mobile" selected>Développement web et mobile (18 Août)</option>
+                            <option value="Community management">Community management</option>
+                            <option value="Graphisme & design (UI/UX)">Graphisme & design (UI/UX)</option>
+                            <option value="Cybersécurité">Cybersécurité</option>
+                            <option value="Data science / Analyse de données">Data science / Analyse de données</option>
+                            <option value="Intelligence artificielle (IA)">Intelligence artificielle (IA)</option>
+                            <option value="Gestion de projet">Gestion de projet</option>
+                            <option value="Comptabilité et finance">Comptabilité et finance</option>
+                            <option value="Entrepreneuriat">Entrepreneuriat</option>
+                            <option value="Commerce international">Commerce international</option>
+                            <option value="Agroécologie / agriculture durable">Agroécologie / agriculture durable</option>
+                            <option value="Transformation agroalimentaire">Transformation agroalimentaire</option>
+                            <option value="Entrepreneuriat agricole">Entrepreneuriat agricole</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message">Vos objectifs et attentes</label>
+                        <textarea id="message" name="message" rows="3" placeholder="Décrivez brièvement votre projet et ce que vous espérez de cette formation"></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-secondary" style="width: 100%;">
+                        <i class="fas fa-paper-plane"></i> Envoyer ma demande
+                    </button>
+                    
+                    <p class="form-note" style="text-align: center; margin-top: 1rem; color: rgba(255,255,255,0.6);">
+                        <i class="fas fa-lock"></i> Vos informations sont sécurisées et ne seront jamais partagées
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Menu mobile
+            const hamburger = document.querySelector('.hamburger');
+            const navMenu = document.querySelector('.nav-links');
+            
+            hamburger.addEventListener('click', function() {
+                navMenu.classList.toggle('active');
+                hamburger.innerHTML = navMenu.classList.contains('active') ? 
+                    '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+            });
+            
+            // Modal functionality
+            const modal = document.getElementById('modal-overlay');
+            const openModalButtons = document.querySelectorAll('.open-modal-btn');
+            const closeModal = document.querySelector('.close-modal');
+            const successMessage = document.getElementById('success-message');
+            const contactForm = document.getElementById('contact-form');
+            const contactFormPage = document.getElementById('contact-form-page');
+            
+            openModalButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    modal.classList.add('active');
+                    document.body.style.overflow = 'hidden'; // Prevent scrolling
+                });
+            });
+            
+            closeModal.addEventListener('click', function() {
+                modal.classList.remove('active');
+                document.body.style.overflow = ''; // Restore scrolling
+            });
+            
+            // Close modal when clicking outside
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    modal.classList.remove('active');
+                    document.body.style.overflow = ''; // Restore scrolling
+                }
+            });
+            
+            // Form submission for modal
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Simulate form submission
+                setTimeout(function() {
+                    contactForm.reset();
+                    successMessage.style.display = 'block';
+                    
+                    // Hide success message after 5 seconds
+                    setTimeout(function() {
+                        successMessage.style.display = 'none';
+                        modal.classList.remove('active');
+                        document.body.style.overflow = ''; // Restore scrolling
+                    }, 5000);
+                }, 1000);
+            });
+            
+            // Form submission for contact page
+            contactFormPage.addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('Merci pour votre message ! Nous vous répondrons dans les plus brefs délais.');
+                contactFormPage.reset();
+            });
+        });
+    </script>
+</body>
+</html>
