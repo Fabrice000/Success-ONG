@@ -86,6 +86,35 @@
             transition: var(--transition);
         }
 
+        .logo-icon {
+            height: 59px;
+            margin-right: 12px;
+        }
+
+        .logo span {
+            color: var(--primary);
+            position: relative;
+        }
+
+        .logo span::after {
+            content: '+';
+            color: var(--secondary);
+            font-size: 1.8rem;
+            position: absolute;
+            top: -0.5rem;
+            right: -1rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: white;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
         .logo i {
             margin-right: 12px;
             color: var(--accent);
@@ -912,11 +941,12 @@
     <!-- Header -->
     <header>
         <div class="container navbar">
-            <a href="index.html" class="logo">
-                <i class="fas fa-rocket"></i>
-                SUCCESS<span>+</span>
-            </a>
             
+            
+            <a href="index.html" class="logo">
+    <img src="1000791665-removebg-preview(1).png" alt="SUCCESS+ Logo" class="logo-icon">
+    SUCCESS<span>+</span>
+</a>
             <button class="hamburger">
                 <i class="fas fa-bars"></i>
             </button>
@@ -961,7 +991,7 @@
             </div>
             <h2>Formation Développement Web</h2>
             <h3>Débute le 18 Août - Places limitées</h3>
-            <p>Profitez de notre formation intensive de 6 semaines pour maîtriser les technologies web modernes et lancer votre carrière dans le numérique.</p>
+            <p>Profitez de notre formation intensive de 3 jours pour maîtriser les technologies web modernes et lancer votre carrière dans le numérique.</p>
             
             <ul>
                 <li>HTML5, CSS3 et JavaScript moderne</li>
