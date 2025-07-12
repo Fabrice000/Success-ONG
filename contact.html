@@ -686,6 +686,111 @@
                 gap: 0.5rem;
             }
         }
+
+
+        /* Styles pour le bouton flottant */
+        .floating-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 999;
+            animation: pulse 2s infinite;
+            transform-origin: center;
+        }
+        
+        .floating-btn a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #FF6B00 0%, #FFC107 100%);
+            color: white;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            padding: 16px 24px;
+            border-radius: 50px;
+            box-shadow: 0 8px 25px rgba(255, 107, 0, 0.5);
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .floating-btn a:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #FFC107 0%, #FF6B00 100%);
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: -1;
+        }
+        
+        .floating-btn a:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 12px 35px rgba(255, 107, 0, 0.7);
+        }
+        
+        .floating-btn a:hover:before {
+            opacity: 1;
+        }
+        
+        .floating-btn a i {
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+        
+        /* Animation pulsation */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .floating-btn {
+                bottom: 20px;
+                right: 20px;
+            }
+            
+            .floating-btn a {
+                font-size: 1rem;
+                padding: 14px 20px;
+            }
+            
+            .floating-btn a i {
+                margin-right: 8px;
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .floating-btn a span {
+                display: none;
+            }
+            
+            .floating-btn a i {
+                margin-right: 0;
+                font-size: 1.2rem;
+            }
+            
+            .floating-btn a {
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+        }
+
+
     </style>
 </head>
 <body>
@@ -712,6 +817,15 @@
             </ul>
         </div>
     </header>
+
+
+     <!-- Bouton flottant -->
+    <div class="floating-btn">
+        <a href="inscriptions.html">
+            <i class="fas fa-pencil-alt"></i>
+            <span>Inscription Gratuite</span>
+        </a>
+    </div>
 
     <!-- Page Header -->
     <section class="page-header">
@@ -951,6 +1065,17 @@
     </div>
 
     <script>
+        // Animation supplémentaire au survol
+        document.addEventListener('DOMContentLoaded', function() {
+            const btn = document.querySelector('.floating-btn a');
+            
+            btn.addEventListener('mouseenter', function() {
+                this.style.animation = 'none';
+                setTimeout(() => {
+                    this.style.animation = 'pulse 2s infinite';
+                }, 10);
+            });
+        });
         document.addEventListener('DOMContentLoaded', function() {
             // Menu mobile
             const hamburger = document.querySelector('.hamburger');
