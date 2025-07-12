@@ -86,11 +86,15 @@
             transition: var(--transition);
         }
 
-        .logo i {
+        .logo-icon {
+            height: 59px;
+            width: 59px;
             margin-right: 12px;
-            color: var(--accent);
-            font-size: 2.5rem;
-            text-shadow: 0 0 15px rgba(255, 193, 7, 0.5);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
         }
 
         .logo span {
@@ -110,6 +114,7 @@
         .nav-links {
             display: flex;
             list-style: none;
+            align-items: center;
         }
 
         .nav-links li {
@@ -506,7 +511,8 @@
         }
 
         .form-group input,
-        .form-group select {
+        .form-group select,
+        .form-group textarea {
             width: 100%;
             padding: 1rem 1.5rem;
             background: rgba(255, 255, 255, 0.08);
@@ -514,10 +520,12 @@
             border-radius: 10px;
             color: white;
             font-size: 1rem;
+            font-family: 'Raleway', sans-serif;
         }
 
         .form-group input:focus,
-        .form-group select:focus {
+        .form-group select:focus,
+        .form-group textarea:focus {
             outline: none;
             border-color: var(--primary);
         }
@@ -604,6 +612,29 @@
             font-size: 1.1rem;
         }
 
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            color: white;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background: var(--primary);
+            transform: translateY(-5px);
+        }
+
         .copyright {
             text-align: center;
             padding-top: 3rem;
@@ -612,9 +643,97 @@
             font-size: 1rem;
         }
 
+        /* Mobile menu button */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            background: none;
+            border: none;
+            font-size: 2rem;
+            color: white;
+        }
+
+        /* Responsive */
         @media (max-width: 992px) {
+            .page-header h1 {
+                font-size: 3.5rem;
+            }
+            
             .services-grid {
                 grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                flex-direction: column;
+                background: rgba(10, 20, 30, 0.95);
+                width: 100%;
+                text-align: center;
+                transition: 0.4s ease;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+                padding: 2rem 0;
+                z-index: 999;
+                backdrop-filter: blur(10px);
+            }
+            
+            .nav-links.active {
+                left: 0;
+            }
+            
+            .nav-links li {
+                margin: 1.8rem 0;
+            }
+            
+            .hamburger {
+                display: block;
+                cursor: pointer;
+            }
+            
+            .formation-categories {
+                grid-template-columns: 1fr;
+            }
+            
+            .category-card {
+                padding: 2rem;
+            }
+            
+            .category-card h2 {
+                font-size: 2rem;
+            }
+        }
+
+        /* Mobile specific */
+        @media (max-width: 480px) {
+            .page-header h1 {
+                font-size: 2.8rem;
+            }
+            
+            .page-header p {
+                font-size: 1.2rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2.5rem;
+            }
+            
+            .section-title p {
+                font-size: 1.1rem;
+            }
+            
+            .category-card {
+                padding: 1.5rem;
+            }
+            
+            .category-card h2 {
+                font-size: 1.8rem;
+            }
+            
+            .formation-list li span {
+                font-size: 0.85rem;
             }
         }
     </style>
@@ -624,10 +743,11 @@
     <header>
         <div class="container navbar">
             <a href="index.html" class="logo">
-                <i class="fas fa-rocket"></i>
+                <div class="logo-icon">
+                    <img src="1000791665-removebg-preview(1).png" alt="logo" style="width: 200px; height: 200px; object-fit: contain;">
+                </div>
                 SUCCESS<span>+</span>
             </a>
-            
             <button class="hamburger">
                 <i class="fas fa-bars"></i>
             </button>
@@ -636,7 +756,9 @@
                 <li><a href="index.html">Accueil</a></li>
                 <li><a href="formations.html" class="active">Formations</a></li>
                 <li><a href="contact.html">Contact</a></li>
-                <li><button class="btn open-modal-btn">Inscrivez-vous</button></li>
+                <li>
+                    <button class="btn open-modal-btn">Inscrivez-vous</button>
+                </li>
             </ul>
         </div>
     </header>
