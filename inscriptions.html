@@ -74,6 +74,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            position: relative;
         }
 
         .logo {
@@ -95,6 +96,12 @@
             align-items: center;
             justify-content: center;
             font-size: 2rem;
+        }
+
+        .logo-icon img {
+            width: 80px; /* Taille plus raisonnable pour mobile */
+            height: auto;
+            object-fit: contain;
         }
 
         .logo span {
@@ -211,7 +218,7 @@
             text-align: center;
             background: 
                 linear-gradient(rgba(10, 20, 30, 0.9), rgba(10, 20, 30, 0.7)),
-                url('images/img3');
+                url('https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80');
             background-size: cover;
             background-position: center;
         }
@@ -553,6 +560,10 @@
             100% { transform: translateY(0px); }
         }
 
+        .hamburger{
+            display: none;
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .nav-links {
@@ -581,6 +592,12 @@
             .hamburger {
                 display: block;
                 cursor: pointer;
+                background: none;
+                border: none;
+                color: white;
+                font-size: 1.8rem;
+                z-index: 1001;
+                position: relative;
             }
             
             .hero h1 {
@@ -596,15 +613,7 @@
             }
         }
 
-        /* Mobile menu button */
-        .hamburger {
-            display: none;
-            cursor: pointer;
-            background: none;
-            border: none;
-            font-size: 2rem;
-            color: white;
-        }
+        
 
         /* Mobile specific */
         @media (max-width: 480px) {
@@ -645,7 +654,7 @@
         <div class="container navbar">
             <a href="index.html" class="logo">
                 <div class="logo-icon">
-                    <img src="1000791665-removebg-preview(1).png" alt="logo" style="width: 200px; height: 200px; object-fit: contain;">
+                    <img src="1000791665-removebg-preview(1).png" alt="logo" style="width: 80px; height: auto;">
                 </div>
                 SUCCESS<span>+</span>
             </a>
@@ -701,7 +710,7 @@
                     </ul>
                 </div>
                 
-                <!--<div class="detail-card">
+              <!--  <div class="detail-card">
                     <div class="detail-icon">
                         <i class="fas fa-server"></i>
                     </div>
@@ -728,7 +737,7 @@
                         <li>Bonnes pratiques de développement</li>
                     </ul>
                 </div>
-            -->
+                -->
             </div>
         </div>
     </section>
@@ -747,7 +756,7 @@
                     Vous allez recevoir un email de confirmation avec les détails de la formation.
                 </div>
                 
-                <form id="registration-form">
+                <form id="registration-form" method="POST" action="process.php">
                     <div class="form-row">
                         <div class="form-group">
                             <label for="firstName">Prénom</label>
@@ -781,9 +790,9 @@
                         <label for="experience">Niveau d'expérience en développement</label>
                         <select id="experience" name="experience" required>
                             <option value="">Sélectionnez votre niveau</option>
-                            <option value="beginner">Débutant - Je commence tout juste</option>
-                            <option value="intermediate">Intermédiaire - J'ai quelques bases</option>
-                            <option value="advanced">Avancé - J'ai déjà développé des sites/applications</option>
+                            <option value="Débutant">Débutant - Je commence tout juste</option>
+                            <option value="Intermédiaire">Intermédiaire - J'ai quelques bases</option>
+                            <option value="Avancé">Avancé - J'ai déjà développé des sites/applications</option>
                         </select>
                     </div>
                     
@@ -791,12 +800,12 @@
                         <label for="source">Comment avez-vous entendu parler de cette formation?</label>
                         <select id="source" name="source" required>
                             <option value="">Sélectionnez une option</option>
-                            <option value="facebook">Facebook</option>
-                            <option value="instagram">Instagram</option>
-                            <option value="linkedin">LinkedIn</option>
-                            <option value="friend">Recommandation d'un ami</option>
-                            <option value="website">Site web de SUCCESS+</option>
-                            <option value="other">Autre</option>
+                            <option value="Facebook">Facebook</option>
+                            <option value="Instagram">Instagram</option>
+                            <option value="LinkedIn">LinkedIn</option>
+                            <option value="Recommandation d'un ami">Recommandation d'un ami</option>
+                            <option value="Site web de SUCCESS+">Site web de SUCCESS+</option>
+                            <option value="Autre">Autre</option>
                         </select>
                     </div>
                     
@@ -814,7 +823,7 @@
                     
                     <div class="form-group">
                         <div class="checkbox-group">
-                            <input type="checkbox" id="terms" name="terms" required>
+                            <input type="checkbox" id="terms" name="terms" required value="on">
                             <label for="terms">J'accepte les <a href="#" style="color: var(--accent);">conditions d'utilisation</a> et la <a href="#" style="color: var(--accent);">politique de confidentialité</a></label>
                         </div>
                     </div>
@@ -899,31 +908,6 @@
                 }
             });
             
-            // Form submission
-            const registrationForm = document.getElementById('registration-form');
-            const successMessage = document.getElementById('success-message');
-            
-            registrationForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                // Simulate form submission
-                setTimeout(function() {
-                    // Show success message
-                    successMessage.style.display = 'block';
-                    
-                    // Scroll to success message
-                    successMessage.scrollIntoView({ behavior: 'smooth' });
-                    
-                    // Reset form after submission
-                    registrationForm.reset();
-                    
-                    // Hide success message after 8 seconds
-                    setTimeout(function() {
-                        successMessage.style.display = 'none';
-                    }, 8000);
-                }, 1500);
-            });
-            
             // Fermer le menu quand on clique sur un lien
             document.querySelectorAll('.nav-links a').forEach(link => {
                 link.addEventListener('click', function() {
@@ -931,6 +915,21 @@
                     hamburger.innerHTML = '<i class="fas fa-bars"></i>';
                 });
             });
+            
+            // Gestion de l'affichage du message de succès après soumission
+            const urlParams = new URLSearchParams(window.location.search);
+            if(urlParams.has('success')) {
+                const successMessage = document.getElementById('success-message');
+                if(successMessage) {
+                    successMessage.style.display = 'block';
+                    successMessage.scrollIntoView({ behavior: 'smooth' });
+                    
+                    // Hide success message after 8 seconds
+                    setTimeout(function() {
+                        successMessage.style.display = 'none';
+                    }, 8000);
+                }
+            }
         });
     </script>
 </body>

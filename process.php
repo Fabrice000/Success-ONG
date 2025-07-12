@@ -48,17 +48,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nom = cleanInput($_POST['firstName'] ?? '') . ' ' . cleanInput($_POST['lastName'] ?? '');
     $email = cleanInput($_POST['email'] ?? '');
     $telephone = cleanInput($_POST['phone'] ?? '');
-    $formation = cleanInput($_POST['experience'] ?? '');
-    $message = cleanInput($_POST['motivation'] ?? '');
+    $formation = "Formation Développement Web Gratuite"; // Fixé car c'est la formation de cette page
     $location = cleanInput($_POST['location'] ?? '');
     $source = cleanInput($_POST['source'] ?? '');
+    $niveau_experience = cleanInput($_POST['experience'] ?? '');
+    $motivation = cleanInput($_POST['motivation'] ?? '');
+    
+    // Combiner niveau d'expérience et motivation dans le message
+    $message = "Niveau d'expérience: $niveau_experience\n\nMotivation:\n$motivation";
     
     // Validation des données obligatoires
     $errors = [];
     if (empty($nom)) $errors[] = "Le nom est obligatoire";
     if (empty($email)) $errors[] = "L'email est obligatoire";
     if (empty($telephone)) $errors[] = "Le téléphone est obligatoire";
-    if (empty($formation)) $errors[] = "La formation est obligatoire";
     
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $errors[] = "L'adresse email est invalide";
@@ -201,7 +204,7 @@ function sendAdminEmail($admin_email, $site_email, $inscription_id, $nom, $email
             <span class='label'>Source :</span> $source
           </div>
           <div class='info'>
-            <span class='label'>Message :</span> $message
+            <span class='label'>Message :</span> <pre>$message</pre>
           </div>
           <div class='info'>
             <span class='label'>Date d'inscription :</span> ".date('d/m/Y H:i')."
