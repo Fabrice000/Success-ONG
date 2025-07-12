@@ -219,7 +219,7 @@
             height: 100%;
             background: 
                 linear-gradient(rgba(10, 20, 30, 0.9), rgba(10, 20, 30, 0.7)),
-                url('https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80');
+                url('images/img1.avif');
             background-size: cover;
             background-position: center;
             z-index: -1;
@@ -318,7 +318,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80');
+            background: url('images/img2.avif');
             background-size: cover;
             background-position: center;
             opacity: 0.1;
@@ -634,7 +634,7 @@
             height: 100%;
             background: 
                 linear-gradient(rgba(10, 20, 30, 0.9), rgba(10, 20, 30, 0.9)),
-                url('https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80');
+                url('images/img3.avif');
             background-size: cover;
             background-position: center;
             z-index: -1;
@@ -917,19 +917,19 @@
 
         @media (max-width: 768px) {
             .nav-links {
-                position: fixed;
-                top: 80px;
-                left: -100%;
-                flex-direction: column;
-                background: rgba(10, 20, 30, 0.95);
-                width: 100%;
-                text-align: center;
-                transition: 0.4s ease;
-                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-                padding: 2rem 0;
-                z-index: 999;
-                backdrop-filter: blur(10px);
-            }
+            position: fixed;
+            top: 80px;
+            left: -100%;
+            flex-direction: column;
+            background: rgba(10, 20, 30, 0.95);
+            width: 100%;
+            text-align: center;
+            transition: 0.4s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            padding: 2rem 0;
+            z-index: 999;
+            backdrop-filter: blur(10px);
+        }
             
             .nav-links.active {
                 left: 0;
@@ -940,8 +940,17 @@
             }
             
             .hamburger {
-                display: block;
-                cursor: pointer;
+            display: block;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 2rem;
+            z-index: 1001; /* S'assurer qu'il est au-dessus */
+            position: relative; /* Positionnement correct */
+        }
+
+
             }
             
             .cta-buttons {
@@ -1058,7 +1067,7 @@
                 </div>
                 
                 <div class="date-badge">
-                    <i class="fas fa-calendar-alt"></i> Prochaine session démarre le 18 Août - Places limitées
+                    <i  class="fas fa-calendar-alt"></i> Prochaine session démarre le 18 Août - Places limitées
                 </div>
                 
                 <div class="cta-buttons">
@@ -1241,7 +1250,7 @@
                     <h3>SUCCESS+</h3>
                     <p>Construit ton projet, écris ton avenir</p>
                     <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="inscriptions.html"><i class="fab fa-facebook-f"></i></a>
                         <a href="#"><i class="fab fa-twitter"></i></a>
                         <a href="#"><i class="fab fa-instagram"></i></a>
                         <a href="#"><i class="fab fa-linkedin-in"></i></a>
