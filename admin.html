@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SUCCESS+ - Interface Administrateur</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #FF6B00;
+            --secondary: #28A745;
+            --accent: #FFC107;
+            --dark: #212529;
+            --light: #F8F9FA;
+            --danger: #DC3545;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Raleway', sans-serif;
+            color: white;
+            line-height: 1.7;
+            background: linear-gradient(135deg, #0c1a25 0%, #0a1420 100%);
+            min-height: 100vh;
+        }
+
+        .admin-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            background: rgba(10, 20, 30, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 2rem 1rem;
+            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .admin-logo {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .admin-logo img {
+            max-width: 150px;
+            height: auto;
+        }
+
+        .admin-menu {
+            list-style: none;
+        }
+
+        .admin-menu li {
+            margin-bottom: 0.5rem;
+        }
+
+        .admin-menu a {
+            display: block;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            padding: 1rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .admin-menu a:hover, .admin-menu a.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .admin-menu i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .admin-title {
+            font-size: 2.2rem;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .admin-user {
+            display: flex;
+            align-items: center;
+        }
+
+        .admin-user img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        /* Dashboard Cards */
+        .stats-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 1.5rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+
+        .stat-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-text {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Table Styles */
+        .admin-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            color: var(--accent);
+        }
+
+        .filters {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .filter-select {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: white;
+            padding: 0.5rem 1rem;
+        }
+
+        .search-box {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.8rem 1rem 0.8rem 3rem;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: white;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .admin-table th, .admin-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .admin-table th {
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-pending {
+            background: rgba(255, 193, 7, 0.2);
+            color: var(--accent);
+        }
+
+        .status-validated {
+            background: rgba(40, 167, 69, 0.2);
+            color: var(--secondary);
+        }
+
+        .status-rejected {
+            background: rgba(220, 53, 69, 0.2);
+            color: var(--danger);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-sm {
+            padding: 0.3rem 0.6rem;
+            font-size: 0.8rem;
+        }
+
+        .btn i {
+            margin-right: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #E55E00;
+        }
+
+        .btn-success {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #218838;
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #BD2130;
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 1.5rem;
+            gap: 0.5rem;
+        }
+
+        .page-item {
+            display: inline-block;
+        }
+
+        .page-link {
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.08);
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .page-link:hover, .page-link.active {
+            background: var(--primary);
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal {
+            background: linear-gradient(135deg, #1a2a3a 0%, #0c1a25 100%);
+            border-radius: 15px;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            position: relative;
+            transform: translateY(-50px);
+            transition: transform 0.5s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+        }
+
+        .modal-overlay.active .modal {
+            transform: translateY(0);
+        }
+
+        .modal-header {
+            padding: 1.5rem;
+            background: rgba(0, 0, 0, 0.3);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            color: var(--accent);
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .modal-body {
+            padding: 2rem;
+        }
+
+        .modal-footer {
+            padding: 1.5rem;
+            background: rgba(0, 0, 0, 0.3);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: white;
+            font-family: 'Raleway', sans-serif;
+        }
+
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        @media (max-width: 992px) {
+            .admin-container {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                padding: 1rem;
+            }
+            
+            .admin-menu {
+                display: flex;
+                overflow-x: auto;
+                gap: 0.5rem;
+            }
+            
+            .admin-menu li {
+                margin-bottom: 0;
+            }
+            
+            .admin-menu a {
+                white-space: nowrap;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .stats-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .filters {
+                flex-direction: column;
+            }
+            
+            .admin-table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="admin-logo">
+                <img src="1000791665-removebg-preview(1).png" alt="SUCCESS+ Admin">
+            </div>
+            
+            <ul class="admin-menu">
+                <li><a href="#" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="#"><i class="fas fa-users"></i> Participants</a></li>
+                <li><a href="#"><i class="fas fa-money-check-alt"></i> Paiements</a></li>
+                <li><a href="#"><i class="fas fa-certificate"></i> Certificats</a></li>
+                <li><a href="#"><i class="fas fa-cog"></i> Paramètres</a></li>
+                <li><a href="#"><i class="fas fa-sign-out-alt"></i> Déconnexion</a></li>
+            </ul>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="admin-header">
+                <h1 class="admin-title">Tableau de Bord Administrateur</h1>
+                <div class="admin-user">
+                    <img src="https://ui-avatars.com/api/?name=Admin+User&background=FF6B00&color=fff" alt="Admin">
+                    <span>Administrateur</span>
+                </div>
+            </div>
+            
+            <!-- Statistics Cards -->
+            <div class="stats-cards">
+                <div class="stat-card">
+                    <div class="stat-icon" style="color: var(--accent);">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-number">142</div>
+                    <div class="stat-text">Participants Inscrits</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon" style="color: var(--primary);">
+                        <i class="fas fa-money-bill-wave"></i>
+                    </div>
+                    <div class="stat-number">87</div>
+                    <div class="stat-text">Paiements Effectués</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon" style="color: var(--secondary);">
+                        <i class="fas fa-certificate"></i>
+                    </div>
+                    <div class="stat-number">64</div>
+                    <div class="stat-text">Certificats Validés</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon" style="color: var(--danger);">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-number">23</div>
+                    <div class="stat-text">En Attente de Validation</div>
+                </div>
+            </div>
+            
+            <!-- Participants Table -->
+            <div class="admin-card">
+                <div class="card-header">
+                    <h2 class="card-title">Participants en Attente de Validation</h2>
+                    <button class="btn btn-primary" id="generate-certificate">
+                        <i class="fas fa-file-pdf"></i> Générer Certificat
+                    </button>
+                </div>
+                
+                <div class="filters">
+                    <select class="filter-select">
+                        <option>Tous les formations</option>
+                        <option>Développement Web</option>
+                        <option>Marketing Digital</option>
+                        <option>Gestion de Projet</option>
+                    </select>
+                    
+                    <select class="filter-select">
+                        <option>Tous les statuts</option>
+                        <option>En attente</option>
+                        <option>Validé</option>
+                        <option>Rejeté</option>
+                    </select>
+                    
+                    <select class="filter-select">
+                        <option>Trier par date</option>
+                        <option>Plus récents</option>
+                        <option>Plus anciens</option>
+                    </select>
+                </div>
+                
+                <div class="search-box">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" class="search-input" placeholder="Rechercher un participant...">
+                </div>
+                
+                <div class="table-responsive">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <input type="checkbox" id="select-all">
+                                </th>
+                                <th>Nom & Prénom</th>
+                                <th>Formation</th>
+                                <th>Email</th>
+                                <th>Téléphone</th>
+                                <th>Méthode Paiement</th>
+                                <th>Date Paiement</th>
+                                <th>Statut</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <input type="checkbox" class="participant-check">
+                                </td>
+                                <td>Jean Dupont</td>
+                                <td>Développement Web</td>
+                                <td>jean.dupont@email.com</td>
+                                <td>+225 07 05 43 21 09</td>
+                                <td>Orange Money</td>
+                                <td>15/08/2023</td>
+                                <td>
+                                    <span class="status-badge status-pending">En attente</span>
+                                </td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn btn-success btn-sm" data-id="1">
+                                            <i class="fas fa-check"></i> Valider
+                                        </button>
+                                        <button class="btn btn-danger btn-sm" data-id="1">
+                                            <i class="fas fa-times"></i> Rejeter
+                                        </button>
+                                        <button class="btn btn-secondary btn-sm view-details" data-id="1">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="checkbox" class="participant-check">
+                                </td>
+                                <td>Marie Koné</td>
+                                <td>Marketing Digital</td>
+                                <td>marie.kone@email.com</td>
+                                <td>+225 05 07 12 34 56</td>
+                                <td>MTN Mobile Money</td>
+                                <td>16/08/2023</td>
+                                <td>
+                                    <span class="status-badge status-pending">En attente</span>
+                                </td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn btn-success btn-sm" data-id="2">
+                                            <i class="fas fa-check"></i> Valider
+                                        </button>
+                                        <button class="btn btn-danger btn-sm" data-id="2">
+                                            <i class="fas fa-times"></i> Rejeter
+                                        </button>
+                                        <button class="btn btn-secondary btn-sm view-details" data-id="2">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="checkbox" class="participant-check">
+                                </td>
+                                <td>Paul Kouassi</td>
+                                <td>Développement Web</td>
+                                <td>paul.kouassi@email.com</td>
+                                <td>+225 07 08 98 76 54</td>
+                                <td>Wave</td>
+                                <td>17/08/2023</td>
+                                <td>
+                                    <span class="status-badge status-pending">En attente</span>
+                                </td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn btn-success btn-sm" data-id="3">
+                                            <i class="fas fa-check"></i> Valider
+                                        </button>
+                                        <button class="btn btn-danger btn-sm" data-id="3">
+                                            <i class="fas fa-times"></i> Rejeter
+                                        </button>
+                                        <button class="btn btn-secondary btn-sm view-details" data-id="3">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="checkbox" class="participant-check">
+                                </td>
+                                <td>Sophie Yao</td>
+                                <td>Gestion de Projet</td>
+                                <td>sophie.yao@email.com</td>
+                                <td>+225 01 02 03 04 05</td>
+                                <td>Moov Money</td>
+                                <td>18/08/2023</td>
+                                <td>
+                                    <span class="status-badge status-pending">En attente</span>
+                                </td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn btn-success btn-sm" data-id="4">
+                                            <i class="fas fa-check"></i> Valider
+                                        </button>
+                                        <button class="btn btn-danger btn-sm" data-id="4">
+                                            <i class="fas fa-times"></i> Rejeter
+                                        </button>
+                                        <button class="btn btn-secondary btn-sm view-details" data-id="4">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="checkbox" class="participant-check">
+                                </td>
+                                <td>Marc Aka</td>
+                                <td>Développement Web</td>
+                                <td>marc.aka@email.com</td>
+                                <td>+225 07 09 08 07 06</td>
+                                <td>Airtel Money</td>
+                                <td>19/08/2023</td>
+                                <td>
+                                    <span class="status-badge status-pending">En attente</span>
+                                </td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn btn-success btn-sm" data-id="5">
+                                            <i class="fas fa-check"></i> Valider
+                                        </button>
+                                        <button class="btn btn-danger btn-sm" data-id="5">
+                                            <i class="fas fa-times"></i> Rejeter
+                                        </button>
+                                        <button class="btn btn-secondary btn-sm view-details" data-id="5">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="pagination">
+                    <div class="page-item">
+                        <a href="#" class="page-link"><i class="fas fa-chevron-left"></i></a>
+                    </div>
+                    <div class="page-item">
+                        <a href="#" class="page-link active">1</a>
+                    </div>
+                    <div class="page-item">
+                        <a href="#" class="page-link">2</a>
+                    </div>
+                    <div class="page-item">
+                        <a href="#" class="page-link">3</a>
+                    </div>
+                    <div class="page-item">
+                        <a href="#" class="page-link"><i class="fas fa-chevron-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Participant Details -->
+    <div class="modal-overlay" id="details-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Détails du Participant</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Nom Complet</label>
+                    <input type="text" value="Jean Dupont" readonly>
+                </div>
+                
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" value="jean.dupont@email.com" readonly>
+                </div>
+                
+                <div class="form-group">
+                    <label>Téléphone</label>
+                    <input type="text" value="+225 07 05 43 21 09" readonly>
+                </div>
+                
+                <div class="form-group">
+                    <label>Formation</label>
+                    <input type="text" value="Développement Web" readonly>
+                </div>
+                
+                <div class="form-group">
+                    <label>Méthode de Paiement</label>
+                    <input type="text" value="Orange Money" readonly>
+                </div>
+                
+                <div class="form-group">
+                    <label>Date de Paiement</label>
+                    <input type="text" value="15/08/2023" readonly>
+                </div>
+                
+                <div class="form-group">
+                    <label>Code de Transaction</label>
+                    <input type="text" value="OM123456789" readonly>
+                </div>
+                
+                <div class="form-group">
+                    <label>Statut</label>
+                    <select>
+                        <option>En attente</option>
+                        <option selected>Validé</option>
+                        <option>Rejeté</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Notes (optionnel)</label>
+                    <textarea rows="3" placeholder="Ajoutez des notes internes..."></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="close-modal">Annuler</button>
+                <button class="btn btn-primary">Enregistrer</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Gestion de la modal
+            const detailsModal = document.getElementById('details-modal');
+            const viewButtons = document.querySelectorAll('.view-details');
+            const closeModal = document.querySelector('.close-modal');
+            const closeModalBtn = document.getElementById('close-modal');
+            
+            viewButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    detailsModal.classList.add('active');
+                });
+            });
+            
+            closeModal.addEventListener('click', () => {
+                detailsModal.classList.remove('active');
+            });
+            
+            closeModalBtn.addEventListener('click', () => {
+                detailsModal.classList.remove('active');
+            });
+            
+            // Gestion de la sélection/désélection
+            const selectAll = document.getElementById('select-all');
+            const participantChecks = document.querySelectorAll('.participant-check');
+            
+            selectAll.addEventListener('change', () => {
+                participantChecks.forEach(check => {
+                    check.checked = selectAll.checked;
+                });
+            });
+            
+            // Gestion des boutons Valider/Rejeter
+            const validateButtons = document.querySelectorAll('.btn-success');
+            const rejectButtons = document.querySelectorAll('.btn-danger');
+            
+            validateButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const participantId = this.getAttribute('data-id');
+                    const participantRow = this.closest('tr');
+                    
+                    // Simulation de validation
+                    participantRow.querySelector('.status-badge').className = 'status-badge status-validated';
+                    participantRow.querySelector('.status-badge').textContent = 'Validé';
+                    
+                    // Cacher les boutons d'action
+                    this.style.display = 'none';
+                    this.nextElementSibling.style.display = 'none';
+                    
+                    // Ajouter un bouton pour générer le certificat
+                    const actionCell = participantRow.querySelector('.action-buttons');
+                    actionCell.innerHTML += `
+                        <button class="btn btn-primary btn-sm generate-btn" data-id="${participantId}">
+                            <i class="fas fa-file-pdf"></i> Certificat
+                        </button>
+                    `;
+                    
+                    // Ajouter l'écouteur d'événement pour le nouveau bouton
+                    const generateBtn = participantRow.querySelector('.generate-btn');
+                    generateBtn.addEventListener('click', function() {
+                        alert(`Génération du certificat pour le participant ${participantId}`);
+                        // Ici, vous appelleriez votre API pour générer le PDF
+                    });
+                });
+            });
+            
+            rejectButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const participantId = this.getAttribute('data-id');
+                    const participantRow = this.closest('tr');
+                    
+                    // Simulation de rejet
+                    participantRow.querySelector('.status-badge').className = 'status-badge status-rejected';
+                    participantRow.querySelector('.status-badge').textContent = 'Rejeté';
+                    
+                    // Cacher les boutons d'action
+                    this.style.display = 'none';
+                    this.previousElementSibling.style.display = 'none';
+                    
+                    // Ajouter un champ pour la raison du rejet
+                    const actionCell = participantRow.querySelector('.action-buttons');
+                    actionCell.innerHTML += `
+                        <button class="btn btn-secondary btn-sm reason-btn" data-id="${participantId}">
+                            <i class="fas fa-comment"></i> Raison
+                        </button>
+                    `;
+                });
+            });
+            
+            // Génération de certificat en masse
+            const generateCertificateBtn = document.getElementById('generate-certificate');
+            
+            generateCertificateBtn.addEventListener('click', () => {
+                const selectedParticipants = Array.from(participantChecks).filter(check => check.checked);
+                
+                if (selectedParticipants.length === 0) {
+                    alert('Veuillez sélectionner au moins un participant');
+                    return;
+                }
+                
+                const participantIds = selectedParticipants.map(check => {
+                    return check.closest('tr').querySelector('.btn-success').getAttribute('data-id');
+                });
+                
+                alert(`Génération des certificats pour les participants: ${participantIds.join(', ')}`);
+                // Ici, vous appelleriez votre API pour générer les PDF en masse
+            });
+        });
+    </script>
+</body>
+</html>
