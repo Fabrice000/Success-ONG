@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SUCCESS+ - Nos Formations</title>
+    <title>SUCCESS+ - Inscription Formation Développement Web & Mobile</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&family=Raleway:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
@@ -74,6 +74,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            position: relative;
         }
 
         .logo {
@@ -200,76 +201,91 @@
             box-shadow: 0 10px 30px rgba(40, 167, 69, 0.6);
         }
 
-        /* Page Formations */
-        .page-header {
-            padding: 12rem 0 6rem;
+        /* Hero Section */
+        .hero {
+            min-height: 50vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            padding-top: 6rem;
             text-align: center;
-            background: linear-gradient(rgba(10, 20, 30, 0.9), rgba(10, 20, 30, 0.7)),
-                url('https://images.unsplash.com/photo-1495465798138-718f86d1a4f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80');
+            background: 
+                linear-gradient(rgba(10, 20, 30, 0.9), rgba(10, 20, 30, 0.7)),
+                url('https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80');
             background-size: cover;
             background-position: center;
         }
 
-        .page-header h1 {
-            font-size: 4rem;
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            padding: 3rem 0;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
             margin-bottom: 1.5rem;
+            line-height: 1.1;
+            font-weight: 900;
+            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero h1 span {
             background: linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-        }
-
-        .page-header p {
-            font-size: 1.5rem;
-            max-width: 800px;
-            margin: 0 auto;
-            color: rgba(255, 255, 255, 0.8);
-        }
-
-        .formations {
-            padding: 6rem 0;
-        }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 5rem;
-        }
-
-        .section-title h2 {
-            font-size: 3.5rem;
-            margin-bottom: 1.5rem;
             position: relative;
-            display: inline-block;
         }
 
-        .section-title h2:after {
-            content: '';
-            position: absolute;
-            bottom: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 5px;
-            background: var(--primary);
-            border-radius: 5px;
-        }
-
-        .section-title p {
-            color: rgba(255, 255, 255, 0.7);
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            color: rgba(255, 255, 255, 0.9);
             max-width: 700px;
-            margin: 2rem auto 0;
+            margin-left: auto;
+            margin-right: auto;
+            font-weight: 300;
+        }
+
+        .date-badge {
+            display: inline-flex;
+            align-items: center;
+            background: var(--accent);
+            color: var(--dark);
+            padding: 1.2rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 800;
+            margin: 2rem 0;
             font-size: 1.3rem;
+            box-shadow: 0 5px 20px rgba(255, 193, 7, 0.4);
+            animation: float 4s ease-in-out infinite;
         }
 
-        .formation-categories {
+        .date-badge i {
+            margin-right: 1rem;
+            font-size: 1.8rem;
+        }
+
+        /* Formation Section */
+        .formation-details {
+            padding: 5rem 0;
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        .details-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 3rem;
+            margin-top: 3rem;
         }
 
-        .category-card {
+        .detail-card {
             background: rgba(255, 255, 255, 0.05);
-            border-radius: 25px;
-            padding: 3rem;
+            border-radius: 20px;
+            padding: 2.5rem;
             transition: var(--transition);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -278,219 +294,98 @@
             overflow: hidden;
         }
 
-        .category-card:hover {
+        .detail-card:hover {
             transform: translateY(-10px);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
         }
 
-        .category-card h2 {
-            font-size: 2.5rem;
-            margin-bottom: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .category-card h2 i {
+        .detail-icon {
+            font-size: 3rem;
             color: var(--accent);
-            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
         }
 
-        .category-card p {
-            margin-bottom: 2rem;
-            color: rgba(255, 255, 255, 0.8);
+        .detail-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: white;
         }
 
-        .formation-list {
+        .detail-card ul {
             list-style: none;
         }
 
-        .formation-list li {
-            margin-bottom: 1.2rem;
-            padding-left: 1.5rem;
+        .detail-card ul li {
+            margin-bottom: 1rem;
+            padding-left: 2rem;
             position: relative;
-        }
-
-        .formation-list li:before {
-            content: '•';
-            position: absolute;
-            left: 0;
-            color: var(--primary);
-            font-size: 1.5rem;
-        }
-
-        .formation-list li span {
-            display: block;
-            color: var(--accent);
-            font-weight: 600;
-            margin-top: 0.3rem;
-            font-size: 0.9rem;
-        }
-
-        .price-badge {
-            display: inline-block;
-            background: var(--secondary);
-            color: white;
-            padding: 0.5rem 1.5rem;
-            border-radius: 30px;
-            font-weight: 700;
-            margin-top: 1.5rem;
             font-size: 1.1rem;
         }
 
-        .free-badge {
-            background: var(--accent);
-            color: var(--dark);
+        .detail-card ul li:before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--secondary);
+            font-weight: bold;
+            font-size: 1.3rem;
         }
 
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 3rem;
-            margin-top: 5rem;
+        /* Price Highlight */
+        .price-highlight {
+            text-align: center;
+            margin: 3rem 0;
+            padding: 2rem;
+            background: linear-gradient(135deg, rgba(255, 107, 0, 0.1) 0%, rgba(255, 193, 7, 0.1) 100%);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 193, 7, 0.3);
         }
 
-        .service-card {
+        .price-highlight h3 {
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+
+        .price-highlight .price {
+            font-size: 3rem;
+            font-weight: 800;
+            color: white;
+            margin: 1rem 0;
+        }
+
+        .price-highlight .price-note {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.1rem;
+        }
+
+        /* Formulaire Section */
+        .registration-section {
+            padding: 5rem 0;
+        }
+
+        .registration-container {
+            max-width: 800px;
+            margin: 0 auto;
             background: rgba(255, 255, 255, 0.05);
             border-radius: 25px;
-            overflow: hidden;
-            transition: var(--transition);
-            position: relative;
-            z-index: 1;
-            transform: translateY(20px);
-            opacity: 0;
+            padding: 3rem;
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
             box-shadow: var(--shadow);
         }
 
-        .service-card.animate {
-            transform: translateY(0);
-            opacity: 1;
-        }
-
-        .service-card:hover {
-            transform: translateY(-15px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-        }
-
-        .service-icon {
-            height: 200px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 4.5rem;
-            color: white;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .service-icon:before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
-            opacity: 0.7;
-            z-index: -1;
-        }
-
-        .service-content {
-            padding: 2.5rem;
-            text-align: center;
-        }
-
-        .service-content h3 {
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
-            color: white;
-        }
-
-        .service-content p {
-            color: rgba(255, 255, 255, 0.8);
-            margin-bottom: 1.5rem;
-            font-size: 1.1rem;
-        }
-
-        /* Modal */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 2000;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-        }
-
-        .modal-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .modal {
-            background: linear-gradient(135deg, #1a2a3a 0%, #0c1a25 100%);
-            border-radius: 25px;
-            width: 90%;
-            max-width: 600px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-            position: relative;
-            transform: translateY(-50px);
-            transition: transform 0.5s ease;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            overflow: hidden;
-        }
-
-        .modal-overlay.active .modal {
-            transform: translateY(0);
-        }
-
-        .modal-header {
-            padding: 2rem;
-            background: rgba(0, 0, 0, 0.3);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .modal-title {
-            font-size: 2rem;
-            color: var(--accent);
-        }
-
-        .close-modal {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 2rem;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .close-modal:hover {
-            color: var(--primary);
-            transform: rotate(90deg);
-        }
-
-        .modal-body {
-            padding: 3rem;
-        }
-
         .form-title {
-            font-size: 1.8rem;
-            margin-bottom: 0.5rem;
-            color: white;
             text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .form-title h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .form-subtitle {
@@ -498,6 +393,16 @@
             text-align: center;
             margin-bottom: 2rem;
             font-size: 1.2rem;
+        }
+
+        .success-message {
+            background: rgba(40, 167, 69, 0.2);
+            border: 1px solid var(--secondary);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            display: none;
         }
 
         .form-group {
@@ -508,6 +413,7 @@
             display: block;
             margin-bottom: 0.5rem;
             color: rgba(255, 255, 255, 0.9);
+            font-weight: 600;
         }
 
         .form-group input,
@@ -528,16 +434,42 @@
         .form-group textarea:focus {
             outline: none;
             border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.3);
         }
 
-        .success-message {
-            background: rgba(40, 167, 69, 0.2);
-            border: 1px solid var(--secondary);
-            border-radius: 10px;
-            padding: 1.5rem;
-            margin-bottom: 2rem;
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            margin-top: 1rem;
+        }
+
+        .checkbox-group input {
+            width: auto;
+            margin-right: 10px;
+        }
+
+        .submit-btn {
+            margin-top: 2rem;
+            width: 100%;
+            font-size: 1.2rem;
+            padding: 1.2rem;
+        }
+
+        .form-note {
             text-align: center;
-            display: none;
+            margin-top: 1.5rem;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+
+        .form-note i {
+            margin-right: 5px;
         }
 
         /* Footer */
@@ -643,27 +575,18 @@
             font-size: 1rem;
         }
 
-        /* Mobile menu button */
-        .hamburger {
+        /* Animations */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .hamburger{
             display: none;
-            cursor: pointer;
-            background: none;
-            border: none;
-            font-size: 2rem;
-            color: white;
         }
 
         /* Responsive */
-        @media (max-width: 992px) {
-            .page-header h1 {
-                font-size: 3.5rem;
-            }
-            
-            .services-grid {
-                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            }
-        }
-
         @media (max-width: 768px) {
             .nav-links {
                 position: fixed;
@@ -691,156 +614,70 @@
             .hamburger {
                 display: block;
                 cursor: pointer;
+                background: none;
+                border: none;
+                color: white;
+                font-size: 1.8rem;
+                z-index: 1001;
+                position: relative;
             }
             
-            .formation-categories {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.2rem;
+            }
+            
+            .form-row {
                 grid-template-columns: 1fr;
             }
             
-            .category-card {
-                padding: 2rem;
-            }
-            
-            .category-card h2 {
-                font-size: 2rem;
+            .price-highlight .price {
+                font-size: 2.5rem;
             }
         }
 
         /* Mobile specific */
         @media (max-width: 480px) {
-            .page-header h1 {
-                font-size: 2.8rem;
+            .hero h1 {
+                font-size: 2rem;
             }
             
-            .page-header p {
-                font-size: 1.2rem;
-            }
-            
-            .section-title h2 {
-                font-size: 2.5rem;
-            }
-            
-            .section-title p {
+            .hero p {
                 font-size: 1.1rem;
             }
             
-            .category-card {
+            .date-badge {
+                font-size: 1.1rem;
+                padding: 1rem 1.5rem;
+            }
+            
+            .detail-card {
                 padding: 1.5rem;
             }
             
-            .category-card h2 {
+            .detail-card h3 {
+                font-size: 1.5rem;
+            }
+            
+            .registration-container {
+                padding: 2rem;
+            }
+            
+            .form-title h2 {
+                font-size: 2rem;
+            }
+            
+            .price-highlight .price {
+                font-size: 2rem;
+            }
+            
+            .price-highlight h3 {
                 font-size: 1.8rem;
             }
-            
-            .formation-list li span {
-                font-size: 0.85rem;
-            }
         }
-
-
-
-        /* Styles pour le bouton flottant */
-        .floating-btn {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            z-index: 999;
-            animation: pulse 2s infinite;
-            transform-origin: center;
-        }
-        
-        .floating-btn a {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, #FF6B00 0%, #FFC107 100%);
-            color: white;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 1.1rem;
-            padding: 16px 24px;
-            border-radius: 50px;
-            box-shadow: 0 8px 25px rgba(255, 107, 0, 0.5);
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            z-index: 1;
-        }
-        
-        .floating-btn a:before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #FFC107 0%, #FF6B00 100%);
-            opacity: 0;
-            transition: all 0.3s ease;
-            z-index: -1;
-        }
-        
-        .floating-btn a:hover {
-            transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 12px 35px rgba(255, 107, 0, 0.7);
-        }
-        
-        .floating-btn a:hover:before {
-            opacity: 1;
-        }
-        
-        .floating-btn a i {
-            margin-right: 10px;
-            font-size: 1.2rem;
-        }
-        
-        /* Animation pulsation */
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-        
-        /* Responsive */
-        @media (max-width: 768px) {
-            .floating-btn {
-                bottom: 20px;
-                right: 20px;
-            }
-            
-            .floating-btn a {
-                font-size: 1rem;
-                padding: 14px 20px;
-            }
-            
-            .floating-btn a i {
-                margin-right: 8px;
-                font-size: 1rem;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .floating-btn a span {
-                display: none;
-            }
-            
-            .floating-btn a i {
-                margin-right: 0;
-                font-size: 1.2rem;
-            }
-            
-            .floating-btn a {
-                width: 50px;
-                height: 50px;
-                border-radius: 50%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-        }
-
     </style>
 </head>
 <body>
@@ -849,7 +686,7 @@
         <div class="container navbar">
             <a href="index.html" class="logo">
                 <div class="logo-icon">
-                    <img src="1000791665-removebg-preview(1).png" alt="logo" style="width: 200px; height: 200px; object-fit: contain;">
+                    <img src="1000791665-removebg-preview(1).png" alt="logo" style="width: 200px; height: auto;">
                 </div>
                 SUCCESS<span>+</span>
             </a>
@@ -859,140 +696,205 @@
             
             <ul class="nav-links">
                 <li><a href="index.html">Accueil</a></li>
-                <li><a href="formations.html" class="active">Formations</a></li>
+                <li><a href="formations.html">Formations</a></li>
                 <li><a href="contact.html">Contact</a></li>
                 <li>
-                    <button class="btn open-modal-btn">Inscrivez-vous</button>
+                    <a href="inscriptions.html" class="btn">Inscrivez-vous</a>
                 </li>
             </ul>
         </div>
     </header>
 
-     <!-- Bouton flottant -->
-    <div class="floating-btn">
-        <a href="inscriptions.html">
-            <i class="fas fa-pencil-alt"></i>
-            <span>Inscription Gratuite</span>
-        </a>
-    </div>
-
-    <!-- Page Header -->
-    <section class="page-header">
-        <div class="container">
-            <h1>Nos Formations Professionnelles</h1>
-            <p>Des programmes conçus pour vous donner les compétences nécessaires à la réussite</p>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container hero-content">
+            <h1>Formation Complète <span>Développement Web & Mobile</span></h1>
+            <p>Maîtrisez les technologies web et mobiles en 2 mois intensifs et lancez votre carrière dans le numérique</p>
+            
+            <div class="date-badge">
+                <i class="fas fa-calendar-alt"></i> Prochaine session démarre le 18 Août - Places limitées
+            </div>
         </div>
     </section>
 
-    <!-- Formations Section -->
-    <section class="formations">
+    <!-- Formation Details -->
+    <section class="formation-details">
         <div class="container">
-            <div class="section-title">
-                <h2>Transformez votre avenir</h2>
-                <p>Des compétences recherchées dans des secteurs porteurs</p>
+            <div class="section-title" style="text-align: center; margin-bottom: 3rem;">
+                <h2 style="font-size: 2.8rem; margin-bottom: 1rem;">Notre programme complet de 2 mois</h2>
+                <p style="color: rgba(255,255,255,0.7); max-width: 800px; margin: 0 auto;">
+                    Une formation intensive pour maîtriser le développement web ET mobile et devenir un développeur fullstack
+                </p>
             </div>
             
-            <div class="formation-categories">
-                <div class="category-card">
-                    <h2><i class="fas fa-laptop-code"></i> Numérique & Tech</h2>
-                    <p>Compétences très recherchées, accessibles avec peu de moyens, souvent via des formations courtes, et très demandées sur le marché du travail.</p>
-                    <ul class="formation-list">
-                        <li>Développement web et mobile
-                            <span>Formation intensive de 6 semaines</span>
-                        </li>
-                        <li>Community management
-                            <span>Certification reconnue par l'État</span>
-                        </li>
-                        <li>Graphisme & design (UI/UX)
-                            <span>Projets pratiques et portfolio</span>
-                        </li>
-                        <li>Cybersécurité
-                            <span>Formation en partenariat avec des experts</span>
-                        </li>
-                        <li>Data science / Analyse de données
-                            <span>Utilisation des outils professionnels</span>
-                        </li>
-                        <li>Intelligence artificielle (IA)
-                            <span>Ateliers pratiques avec projets réels</span>
-                        </li>
+            <div class="details-grid">
+                <div class="detail-card">
+                    <div class="detail-icon">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <h3>Mois 1: Développement Web Avancé</h3>
+                    <ul>
+                        <li>HTML5 avancé et sémantique web</li>
+                        <li>CSS3 avec Flexbox, Grid et animations</li>
+                        <li>JavaScript moderne (ES6+)</li>
+                        <li>Backend avec PHP et Python</li>
+                        <li>Bases de données MySQL</li>
+                        <li>Projet: Application web dynamique</li>
                     </ul>
-                    <div class="price-badge free-badge">Prochaine session gratuite: 18 Août</div>
                 </div>
                 
-                <div class="category-card">
-                    <h2><i class="fas fa-chart-line"></i> Gestion & Business</h2>
-                    <p>Ces formations répondent au besoin croissant de professionnaliser les structures locales et encourager l'auto-emploi.</p>
-                    <ul class="formation-list">
-                        <li>Gestion de projet
-                            <span>Méthodes Agile et Waterfall</span>
-                        </li>
-                        <li>Comptabilité et finance
-                            <span>Formation pratique avec études de cas</span>
-                        </li>
-                        <li>Entrepreneuriat
-                            <span>Accompagnement pour le business plan</span>
-                        </li>
-                        <li>Commerce international
-                            <span>Stratégies d'exportation et logistique</span>
-                        </li>
+                <div class="detail-card">
+                    <div class="detail-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Mois 2: Développement Mobile</h3>
+                    <ul>
+                        <li>Applications hybrides vs natives vs PWA</li>
+                        <li>JavaScript pour applications mobiles</li>
+                        <li>API Device (Camera, GPS, notifications)</li>
+                        <li>Consommation d'API REST</li>
+                        <li>Sauvegarde et synchronisation</li>
+                        <li>Projet: Application mobile complète</li>
                     </ul>
-                    <div class="price-badge">Prix: 20€ seulement!</div>
                 </div>
                 
-                <div class="category-card">
-                    <h2><i class="fas fa-seedling"></i> Agroalimentaire</h2>
-                    <p>Le secteur agricole reste stratégique en Afrique de l'Ouest. Beaucoup de jeunes se forment pour mieux valoriser les ressources locales.</p>
-                    <ul class="formation-list">
-                        <li>Agroécologie / agriculture durable
-                            <span>Visites de fermes modèles</span>
-                        </li>
-                        <li>Transformation agroalimentaire
-                            <span>Ateliers pratiques en laboratoire</span>
-                        </li>
-                        <li>Entrepreneuriat agricole
-                            <span>Business model spécifique au secteur</span>
-                        </li>
+                <div class="detail-card">
+                    <div class="detail-icon">
+                        <i class="fas fa-certificate"></i>
+                    </div>
+                    <h3>Certification Double Compétence</h3>
+                    <ul>
+                        <li>Double certification SUCCESS+</li>
+                        <li>Portfolio avec 2 projets complets</li>
+                        <li>Préparation à l'emploi</li>
+                        <li>Support de cours complet</li>
+                        <li>Accès à la communauté des alumni</li>
+                        <li>Support carrière après la formation</li>
                     </ul>
-                    <div class="price-badge">Prix: 20€ seulement!</div>
+                </div>
+                
+                <div class="detail-card">
+                    <div class="detail-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Vos avantages</h3>
+                    <ul>
+                        <li>Formation intensive en 2 mois seulement</li>
+                        <li>Encadrement par des experts du secteur</li>
+                        <li>Approche 100% pratique et projet</li>
+                        <li>Effectifs réduits pour un suivi personnalisé</li>
+                        <li>Accès aux ressources à vie</li>
+                        <li>Certificat reconnu par les employeurs</li>
+                    </ul>
                 </div>
             </div>
+            
+            <div class="price-highlight">
+                <h3>Investissement pour votre avenir</h3>
+                <div class="price">3 500 FCFA</div>
+                <p class="price-note">Pour les 2 mois de formation intensive (Développement Web + Mobile)</p>
+                <p class="price-note">Frais uniques - Paiement sécurisé - Possibilité de paiement échelonné</p>
+            </div>
+        </div>
+    </section>
 
-            <!-- Avantages -->
-            <div class="section-title" style="margin-top: 5rem;">
-                <h2>Ce qui nous différencie</h2>
-                <p>Notre engagement pour votre réussite</p>
-            </div>
-            
-            <div class="services-grid">
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-chalkboard-teacher"></i>
-                    </div>
-                    <div class="service-content">
-                        <h3>Formateurs experts</h3>
-                        <p>Nos formateurs sont des professionnels qui ont lancé leurs propres entreprises, pas juste des théoriciens !</p>
-                    </div>
+    <!-- Registration Form -->
+    <section class="registration-section">
+        <div class="container">
+            <div class="registration-container">
+                <div class="form-title">
+                    <h2>Formulaire d'Inscription</h2>
+                    <p class="form-subtitle">Réservez votre place pour la formation complète Développement Web & Mobile</p>
                 </div>
                 
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-graduation-cap"></i>
-                    </div>
-                    <div class="service-content">
-                        <h3>Attestations reconnues</h3>
-                        <p>Nos diplômes sont reconnus par les incubateurs locaux et les employeurs.</p>
-                    </div>
+                <div class="success-message" id="success-message">
+                    <i class="fas fa-check-circle"></i> Votre inscription a été enregistrée avec succès! 
+                    Vous allez recevoir un email de confirmation avec les détails de la formation.
                 </div>
                 
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-hands-helping"></i>
+                <form id="registration-form" method="POST" action="process.php">
+                    <input type="hidden" name="formationType" value="Combo Développement Web & Mobile">
+                    <input type="hidden" name="montant" value="3500">
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName">Prénom</label>
+                            <input type="text" id="firstName" name="firstName" required placeholder="Votre prénom">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="lastName">Nom</label>
+                            <input type="text" id="lastName" name="lastName" required placeholder="Votre nom">
+                        </div>
                     </div>
-                    <div class="service-content">
-                        <h3>Suivi personnalisé</h3>
-                        <p>Accompagnement gratuit pendant 3 mois après la formation pour assurer votre succès.</p>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required placeholder="votre@email.com">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone">Téléphone</label>
+                            <input type="tel" id="phone" name="phone" required placeholder="+32 4 75 33 14 26">
+                        </div>
                     </div>
-                </div>
+                    
+                    <div class="form-group">
+                        <label for="location">Ville et Pays</label>
+                        <input type="text" id="location" name="location" required placeholder="Ex: Mons, Belgique">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="experience">Niveau d'expérience en développement</label>
+                        <select id="experience" name="experience" required>
+                            <option value="">Sélectionnez votre niveau</option>
+                            <option value="Débutant">Débutant - Je commence tout juste</option>
+                            <option value="Intermédiaire">Intermédiaire - J'ai quelques bases</option>
+                            <option value="Avancé">Avancé - J'ai déjà développé des sites/applications</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="source">Comment avez-vous entendu parler de cette formation?</label>
+                        <select id="source" name="source" required>
+                            <option value="">Sélectionnez une option</option>
+                            <option value="Facebook">Facebook</option>
+                            <option value="Instagram">Instagram</option>
+                            <option value="LinkedIn">LinkedIn</option>
+                            <option value="Recommandation d'un ami">Recommandation d'un ami</option>
+                            <option value="Site web de SUCCESS+">Site web de SUCCESS+</option>
+                            <option value="Autre">Autre</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="motivation">Vos motivations pour cette formation</label>
+                        <textarea id="motivation" name="motivation" rows="4" placeholder="Pourquoi souhaitez-vous participer à cette formation? Quels sont vos objectifs?"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="newsletter" name="newsletter">
+                            <label for="newsletter">Je souhaite recevoir la newsletter de SUCCESS+ avec des conseils et opportunités</label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="terms" name="terms" required value="on">
+                            <label for="terms">J'accepte les <a href="#" style="color: var(--accent);">conditions d'utilisation</a> et la <a href="#" style="color: var(--accent;">politique de confidentialité</a></label>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn submit-btn">
+                        <i class="fas fa-paper-plane"></i> Envoyer mon inscription
+                    </button>
+                    
+                    <p class="form-note">
+                        <i class="fas fa-lock"></i> Vos informations sont sécurisées et ne seront jamais partagées
+                    </p>
+                </form>
             </div>
         </div>
     </section>
@@ -1018,7 +920,7 @@
                         <li><a href="index.html">Accueil</a></li>
                         <li><a href="formations.html">Formations</a></li>
                         <li><a href="contact.html">Contact</a></li>
-                        <li><a href="#">Blog</a></li>
+                        <li><a href="inscription.html">Inscription</a></li>
                     </ul>
                 </div>
                 
@@ -1049,86 +951,7 @@
         </div>
     </footer>
 
-    <!-- Modal -->
-    <div class="modal-overlay" id="modal-overlay">
-        <div class="modal">
-            <div class="modal-header">
-                <h3 class="modal-title">Inscription à la formation</h3>
-                <button class="close-modal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <h3 class="form-title">Réservez votre place</h3>
-                <p class="form-subtitle">Formation démarre le 18 Août - Places limitées</p>
-                
-                <div class="success-message" id="success-message">
-                    Votre inscription a été enregistrée avec succès! Vous allez recevoir un email de confirmation.
-                </div>
-                
-                <form id="contact-form">
-                    <div class="form-group">
-                        <label for="name">Nom complet</label>
-                        <input type="text" id="name" name="name" required placeholder="Votre nom complet">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" required placeholder="votre@email.com">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="phone">Téléphone</label>
-                        <input type="tel" id="phone" name="phone" required placeholder="+32 4 75 33 14 26">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="formation">Formation choisie</label>
-                        <select id="formation" name="formation" required>
-                            <option value="">Sélectionnez une formation</option>
-                            <option value="Développement web et mobile" selected>Développement web et mobile (18 Août)</option>
-                            <option value="Community management">Community management</option>
-                            <option value="Graphisme & design (UI/UX)">Graphisme & design (UI/UX)</option>
-                            <option value="Cybersécurité">Cybersécurité</option>
-                            <option value="Data science / Analyse de données">Data science / Analyse de données</option>
-                            <option value="Intelligence artificielle (IA)">Intelligence artificielle (IA)</option>
-                            <option value="Gestion de projet">Gestion de projet</option>
-                            <option value="Comptabilité et finance">Comptabilité et finance</option>
-                            <option value="Entrepreneuriat">Entrepreneuriat</option>
-                            <option value="Commerce international">Commerce international</option>
-                            <option value="Agroécologie / agriculture durable">Agroécologie / agriculture durable</option>
-                            <option value="Transformation agroalimentaire">Transformation agroalimentaire</option>
-                            <option value="Entrepreneuriat agricole">Entrepreneuriat agricole</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="message">Vos objectifs et attentes</label>
-                        <textarea id="message" name="message" rows="3" placeholder="Décrivez brièvement votre projet et ce que vous espérez de cette formation"></textarea>
-                    </div>
-                    
-                    <button type="submit" class="btn btn-secondary" style="width: 100%;">
-                        <i class="fas fa-paper-plane"></i> Envoyer ma demande
-                    </button>
-                    
-                    <p class="form-note" style="text-align: center; margin-top: 1rem; color: rgba(255,255,255,0.6);">
-                        <i class="fas fa-lock"></i> Vos informations sont sécurisées et ne seront jamais partagées
-                    </p>
-                </form>
-            </div>
-        </div>
-    </div>
-
     <script>
-        // Animation supplémentaire au survol
-        document.addEventListener('DOMContentLoaded', function() {
-            const btn = document.querySelector('.floating-btn a');
-            
-            btn.addEventListener('mouseenter', function() {
-                this.style.animation = 'none';
-                setTimeout(() => {
-                    this.style.animation = 'pulse 2s infinite';
-                }, 10);
-            });
-        });
         document.addEventListener('DOMContentLoaded', function() {
             // Menu mobile
             const hamburger = document.querySelector('.hamburger');
@@ -1136,67 +959,36 @@
             
             hamburger.addEventListener('click', function() {
                 navMenu.classList.toggle('active');
-                hamburger.innerHTML = navMenu.classList.contains('active') ? 
-                    '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
-            });
-            
-            // Animation des éléments au défilement
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('animate');
-                    }
-                });
-            }, { threshold: 0.1 });
-            
-            document.querySelectorAll('.service-card').forEach(card => {
-                observer.observe(card);
-            });
-            
-            // Modal functionality
-            const modal = document.getElementById('modal-overlay');
-            const openModalButtons = document.querySelectorAll('.open-modal-btn');
-            const closeModal = document.querySelector('.close-modal');
-            const successMessage = document.getElementById('success-message');
-            const contactForm = document.getElementById('contact-form');
-            
-            openModalButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    modal.classList.add('active');
-                    document.body.style.overflow = 'hidden'; // Prevent scrolling
-                });
-            });
-            
-            closeModal.addEventListener('click', function() {
-                modal.classList.remove('active');
-                document.body.style.overflow = ''; // Restore scrolling
-            });
-            
-            // Close modal when clicking outside
-            modal.addEventListener('click', function(e) {
-                if (e.target === modal) {
-                    modal.classList.remove('active');
-                    document.body.style.overflow = ''; // Restore scrolling
+                // Changement d'icône
+                if (navMenu.classList.contains('active')) {
+                    hamburger.innerHTML = '<i class="fas fa-times"></i>';
+                } else {
+                    hamburger.innerHTML = '<i class="fas fa-bars"></i>';
                 }
             });
             
-            // Form submission
-            contactForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                // Simulate form submission
-                setTimeout(function() {
-                    contactForm.reset();
+            // Fermer le menu quand on clique sur un lien
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.addEventListener('click', function() {
+                    navMenu.classList.remove('active');
+                    hamburger.innerHTML = '<i class="fas fa-bars"></i>';
+                });
+            });
+            
+            // Gestion de l'affichage du message de succès après soumission
+            const urlParams = new URLSearchParams(window.location.search);
+            if(urlParams.has('success')) {
+                const successMessage = document.getElementById('success-message');
+                if(successMessage) {
                     successMessage.style.display = 'block';
+                    successMessage.scrollIntoView({ behavior: 'smooth' });
                     
-                    // Hide success message after 5 seconds
+                    // Hide success message after 8 seconds
                     setTimeout(function() {
                         successMessage.style.display = 'none';
-                        modal.classList.remove('active');
-                        document.body.style.overflow = ''; // Restore scrolling
-                    }, 5000);
-                }, 1000);
-            });
+                    }, 8000);
+                }
+            }
         });
     </script>
 </body>
