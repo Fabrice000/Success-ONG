@@ -4,46 +4,33 @@
 // TRAITEMENT DES INSCRIPTIONS ET ENVOI D'EMAILS
 // ==================================================
 
-// CONFIGURATION - À MODIFIER AVANT UTILISATION
+// CONFIGURATION
 // --------------------------------------------
 
-/**
- * 1. CONFIGURATION DE LA BASE DE DONNÉES
- * 
- * Remplacez ces valeurs par les informations fournies par votre hébergeur
- */
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
 
-//Importation des modules de PHPmailer pour l'envoi de mails
-  use PHPMailer\PHPMailer\PHPMailer;
-  use PHPMailer\PHPMailer\SMTP;
-  use PHPMailer\PHPMailer\Exception;
+require __DIR__.'/PHPMailer/src/Exception.php';
+require __DIR__.'/PHPMailer/src/PHPMailer.php';
+require __DIR__.'/PHPMailer/src/SMTP.php';
 
-  require __DIR__.'/PHPMailer/src/Exception.php';
-  require __DIR__.'/PHPMailer/src/PHPMailer.php';
-  require __DIR__.'/PHPMailer/src/SMTP.php';
-  
-$db_host = "localhost";
-$db_name = "successplus_db";
-$db_user = "root";
-$db_pass = "";
+// Configuration de la base de données
+$db_host = "127.0.0.1";
+$db_name = "succe2655432";
+$db_user = "succe2655432";
+$db_pass = "wr2xcw19mz";
 
+// Configuration des emails
+$admin_email = "info@successplusproject.com";
+$site_email = "contact@successplusproject.com";
 
-
-  
-
-
-/**
- * 2. CONFIGURATION DES EMAILS
- */
-$admin_email = "tresorelvis91@gmail.com";
-$site_email = "tresorelvis91@gmail.com";
-
-/**
- * 3. CONFIGURATION SMTP (optionnel mais recommandé)
- */
-// ini_set('SMTP', 'smtp.votredomaine.com');
-// ini_set('smtp_port', 587);
-// ini_set('sendmail_from', $site_email);
+// Configuration SMTP unique
+$smtp_host = "mail28.lwspanel.com";
+$smtp_username = "contact@successplusproject.com";
+$smtp_password = "prosuccess0987654321";
+$smtp_secure = "ssl";
+$smtp_port = 465;
 
 // CONNEXION À LA BASE DE DONNÉES
 // ------------------------------
@@ -76,26 +63,36 @@ function sendJsonResponse($success, $message) {
     exit;
 }
 
-function sendAdminEmail($admin_email, $site_email, $nom, $email, $telephone, $formation, $message, $location, $source){
-  try {
-    //Configuration du smtp PHPMailer 
-    $mail = new PHPMailer(true);
-    $mail->isSMTP();
-    $mail->Host = "smtp.gmail.com";
-    $mail->SMTPAuth = true;
-    $mail->Username = $site_email;
-    $mail->Password = "ubow eove sfwx xjqm";
-    $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
-    $mail->Port = 465;
+function sendEmail($to, $subject, $body, $isHTML = true) {
+    global $smtp_host, $smtp_username, $smtp_password, $smtp_secure, $smtp_port, $site_email;
+    
+    try {
+        $mail = new PHPMailer(true);
+        $mail->isSMTP();
+        $mail->Host = $smtp_host;
+        $mail->SMTPAuth = true;
+        $mail->Username = $smtp_username;
+        $mail->Password = $smtp_password;
+        $mail->SMTPSecure = $smtp_secure;
+        $mail->Port = $smtp_port;
+        $mail->CharSet = 'UTF-8';
 
+        $mail->setFrom($site_email, 'SUCCESS+');
+        $mail->addAddress($to);
+        $mail->isHTML($isHTML);
+        $mail->Subject = $subject;
+        $mail->Body = $body;
+        
+        return $mail->send();
+    } catch (Exception $e) {
+        error_log('Email sending error: ' . $e->getMessage());
+        return false;
+    }
+}
 
-    //Infos de l'email
-    $mail->isHTML(true);
-    $mail->setFrom($site_email, 'SUCCESS+');
-    $mail->addAddress($admin_email);
-
-    $mail->Subject = "Nouvelle inscription à la formation $formation";
-    $mail->Body = "
+function sendAdminEmail($admin_email, $site_email, $inscription_id, $nom, $email, $telephone, $formation, $message, $location, $source) {
+    $subject = "Nouvelle inscription à la formation $formation";
+    $body = "
     <html>
         <head>
           <title>Nouvelle inscription</title>
@@ -118,7 +115,7 @@ function sendAdminEmail($admin_email, $site_email, $nom, $email, $telephone, $fo
               <h3>$formation</h3>
               
               <div class='info'>
-                <span class='label'>ID Inscription :</span> #$inscription_id
+                <span class='label'>ID Inscription :</span> $inscription_id
               </div>
               <div class='info'>
                 <span class='label'>Nom :</span> $nom
@@ -145,35 +142,14 @@ function sendAdminEmail($admin_email, $site_email, $nom, $email, $telephone, $fo
           </div>
         </body>
       </html>
-      ";
+    ";
+    
+    return sendEmail($admin_email, $subject, $body);
+}
 
-    $mail->Send();
-    echo "E-mail envoyé avec succès !";
-  } catch (Exception $e) {
-      echo ('Email sending error: ' . $e->getMessage());
-      sendJsonResponse(false, 'Erreur lors de l\'envoi des emails. Veuillez réessayer.');
-  }
-};
-
-function sendUserConfirmationEmail($email, $site_email, $inscription_id, $nom, $formation){
-  try {
-    //Configuration du smtp PHPMailer 
-    $mail = new PHPMailer(true);
-    $mail->isSMTP();
-    $mail->Host = "smtp.gmail.com";
-    $mail->SMTPAuth = true;
-    $mail->Username = $site_email;
-    $mail->Password = "ubow eove sfwx xjqm";
-    $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
-    $mail->Port = 465;
-
-    //Infos de l'email
-    $mail->isHTML(true);
-    $mail->setFrom($site_email, 'SUCCESS+');
-    $mail->addAddress($email);
-
-    $mail->Subject = "Confirmation d'inscription à SUCCESS+";
-    $mail->Body = "
+function sendUserConfirmationEmail($user_email, $site_email, $inscription_id, $nom, $formation) {
+    $subject = "Confirmation d'inscription à SUCCESS+";
+    $body = "
       <html>
         <head>
           <title>Confirmation d'inscription</title>
@@ -228,14 +204,9 @@ function sendUserConfirmationEmail($email, $site_email, $inscription_id, $nom, $
         </body>
       </html>
     ";
-
-    $mail->Send();
-    echo "E-mail envoyé avec succès !";
-  } catch (Exception $e) {
-      echo('Email sending error: ' . $e->getMessage());
-      sendJsonResponse(false, 'Erreur lors de l\'envoi des emails. Veuillez réessayer.');
-  }
-};
+    
+    return sendEmail($user_email, $subject, $body);
+}
 
 // TRAITEMENT DU FORMULAIRE
 // ------------------------
@@ -244,7 +215,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nom = cleanInput($_POST['firstName'] ?? '') . ' ' . cleanInput($_POST['lastName'] ?? '');
     $email = cleanInput($_POST['email'] ?? '');
     $telephone = cleanInput($_POST['phone'] ?? '');
-    $formation = "Formation Développement Web Gratuite"; // Fixé car c'est la formation de cette page
+    $formation = "Formation Développement Web Gratuite";
     $location = cleanInput($_POST['location'] ?? '');
     $source = cleanInput($_POST['source'] ?? '');
     $niveau_experience = cleanInput($_POST['experience'] ?? '');
@@ -273,7 +244,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     // Insertion dans la base de données
     try {
-      
         $stmt = $pdo->prepare("
             INSERT INTO inscriptions (
                 nom, email, telephone, formation, message, 
@@ -283,7 +253,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 :location, :source, NOW()
             )
         ");
-        echo "requete préparée";
         
         $stmt->bindParam(':nom', $nom, PDO::PARAM_STR);
         $stmt->bindParam(':email', $email, PDO::PARAM_STR);
@@ -293,10 +262,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->bindParam(':location', $location, PDO::PARAM_STR);
         $stmt->bindParam(':source', $source, PDO::PARAM_STR);
         
-        echo "nom: $nom,\nemail: $email,\ntelephone: $telephone,\nformation: $formation,\nmessage: $message,\nlocation: $location,\nsource: $source";
         $stmt->execute();
         
-        echo "E-mail envoyé avec succès !";
         $inscription_id = $pdo->lastInsertId();
     } catch (PDOException $e) {
         error_log('Database error: ' . $e->getMessage());
@@ -304,7 +271,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     
     // ENVOI DES EMAILS
-   // ----------------
+    // ----------------
     $email_admin_sent = sendAdminEmail(
         $admin_email, 
         $site_email, 
@@ -335,138 +302,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         sendJsonResponse(false, 'Une erreur est survenue lors du traitement de votre demande. Veuillez réessayer.');
     }
-    
 } else {
     sendJsonResponse(false, 'Méthode non autorisée');
 }
-
-
-/*function sendAdminEmail($admin_email, $site_email, $inscription_id, $nom, $email, $telephone, $formation, $message, $location, $source) {
-    $subject_admin = "Nouvelle inscription à la formation $formation (ID: $inscription_id)";
-    
-    $message_admin = "
-    <html>
-    <head>
-      <title>Nouvelle inscription</title>
-      <style>
-        body { font-family: Arial, sans-serif; }
-        .container { max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; }
-        .header { background-color: #FF6B00; color: white; padding: 10px; text-align: center; }
-        .content { padding: 20px; }
-        .info { margin-bottom: 10px; }
-        .label { font-weight: bold; color: #FF6B00; }
-      </style>
-    </head>
-    <body>
-      <div class='container'>
-        <div class='header'>
-          <h2>Nouvelle inscription SUCCESS+</h2>
-        </div>
-        <div class='content'>
-          <p>Une nouvelle inscription a été reçue pour la formation :</p>
-          <h3>$formation</h3>
-          
-          <div class='info'>
-            <span class='label'>ID Inscription :</span> #$inscription_id
-          </div>
-          <div class='info'>
-            <span class='label'>Nom :</span> $nom
-          </div>
-          <div class='info'>
-            <span class='label'>Email :</span> $email
-          </div>
-          <div class='info'>
-            <span class='label'>Téléphone :</span> $telephone
-          </div>
-          <div class='info'>
-            <span class='label'>Localisation :</span> $location
-          </div>
-          <div class='info'>
-            <span class='label'>Source :</span> $source
-          </div>
-          <div class='info'>
-            <span class='label'>Message :</span> <pre>$message</pre>
-          </div>
-          <div class='info'>
-            <span class='label'>Date d'inscription :</span> ".date('d/m/Y H:i')."
-          </div>
-        </div>
-      </div>
-    </body>
-    </html>
-    ";
-    
-    $headers_admin = "MIME-Version: 1.0\r\n";
-    $headers_admin .= "Content-type:text/html;charset=UTF-8\r\n";
-    $headers_admin .= "From: SUCCESS+ <$site_email>\r\n";
-    $headers_admin .= "Reply-To: $site_email\r\n";
-    
-    return mail($admin_email, $subject_admin, $message_admin, $headers_admin);
-}
-
-function sendUserConfirmationEmail($user_email, $site_email, $inscription_id, $nom, $formation) {
-    $subject_user = "Confirmation d'inscription à SUCCESS+";
-    
-    $message_user = "
-    <html>
-    <head>
-      <title>Confirmation d'inscription</title>
-      <style>
-        body { font-family: Arial, sans-serif; }
-        .container { max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; }
-        .header { background-color: #28A745; color: white; padding: 10px; text-align: center; }
-        .content { padding: 20px; }
-        .info { margin-bottom: 10px; }
-        .label { font-weight: bold; color: #28A745; }
-        .cta { background-color: #FFC107; color: #333; padding: 10px 20px; text-align: center; border-radius: 5px; margin: 20px 0; }
-      </style>
-    </head>
-    <body>
-      <div class='container'>
-        <div class='header'>
-          <h2>Confirmation d'inscription</h2>
-        </div>
-        <div class='content'>
-          <p>Bonjour $nom,</p>
-          <p>Nous avons bien reçu votre inscription pour la formation :</p>
-          <h3>$formation</h3>
-          
-          <p>Votre demande a été enregistrée avec succès. Voici les détails de votre inscription :</p>
-          
-          <div class='info'>
-            <span class='label'>ID Inscription :</span> #$inscription_id
-          </div>
-          <div class='info'>
-            <span class='label'>Date d'inscription :</span> ".date('d/m/Y H:i')."
-          </div>
-          
-          <p>Notre équipe va examiner votre demande et vous contactera très prochainement pour la suite de votre parcours.</p>
-          
-          <div class='cta'>
-            <p>Prochaine étape : Préparer votre projet</p>
-          </div>
-          
-          <p>En attendant, nous vous invitons à :</p>
-          <ul>
-            <li>Préciser vos objectifs pour cette formation</li>
-            <li>Réfléchir aux questions que vous souhaitez poser à nos formateurs</li>
-            <li>Consulter les ressources préparatoires sur notre site</li>
-          </ul>
-          
-          <p>Pour toute question, vous pouvez répondre directement à cet email.</p>
-          
-          <p>Merci de votre confiance,<br>
-          <strong>L'équipe SUCCESS+</strong></p>
-        </div>
-      </div>
-    </body>
-    </html>
-    ";
-    
-    $headers_user = "MIME-Version: 1.0\r\n";
-    $headers_user .= "Content-type:text/html;charset=UTF-8\r\n";
-    $headers_user .= "From: SUCCESS+ <$site_email>\r\n";
-    $headers_user .= "Reply-To: $site_email\r\n";
-    
-    return mail($user_email, $subject_user, $message_user, $headers_user);
-*/
+?>
