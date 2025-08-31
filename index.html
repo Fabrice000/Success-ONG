@@ -3,213 +3,1566 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulaire d'inscription</title>
+    <title>SUCCESS+ - Construis ton avenir</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&family=Raleway:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary: #FF6B00;
+            --primary-dark: #E55E00;
+            --secondary: #28A745;
+            --secondary-dark: #218838;
+            --accent: #FFC107;
+            --dark: #212529;
+            --light: #F8F9FA;
+            --gray: #6C757D;
+            --transition: all 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+        }
+
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            box-sizing: border-box;
         }
-        
+
         body {
-            background-color: #f5f7fa;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            font-family: 'Raleway', sans-serif;
+            color: white;
+            line-height: 1.7;
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #0c1a25 0%, #0a1420 100%);
+            position: relative;
             min-height: 100vh;
-            padding: 20px;
         }
-        
-        .container {
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            max-width: 500px;
-            padding: 30px;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(255, 107, 0, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(40, 167, 69, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 50% 50%, rgba(255, 193, 7, 0.05) 0%, transparent 30%);
+            z-index: -2;
         }
-        
-        h1 {
-            color: #2c3e50;
-            margin-bottom: 20px;
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 1.5rem 0;
+            background: rgba(10, 20, 30, 0.85);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            transition: var(--transition);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: white;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .logo-icon {
+            height: 59px;
+            width: 59px;
+            margin-right: 12px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+        }
+
+        .logo span {
+            color: var(--primary);
+            position: relative;
+        }
+
+        .logo span::after {
+            content: '+';
+            color: var(--secondary);
+            font-size: 1.8rem;
+            position: absolute;
+            top: -0.5rem;
+            right: -1rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links li {
+            margin-left: 2.5rem;
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: white;
+        }
+
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: var(--primary);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover:after, .nav-links a.active:after {
+            width: 100%;
+        }
+
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(255, 107, 0, 0.4);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .btn:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%);
+            opacity: 0;
+            transition: var(--transition);
+            z-index: -1;
+        }
+
+        .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(255, 107, 0, 0.6);
+        }
+
+        .btn:hover:before {
+            opacity: 1;
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, var(--secondary) 0%, #2dd159 100%);
+            box-shadow: 0 5px 20px rgba(40, 167, 69, 0.4);
+        }
+
+        .btn-secondary:hover {
+            box-shadow: 0 10px 30px rgba(40, 167, 69, 0.6);
+        }
+
+        /* Page Accueil */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            padding-top: 6rem;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(rgba(10, 20, 30, 0.9), rgba(10, 20, 30, 0.7)),
+                url('images/img1.avif');
+            background-size: cover;
+            background-position: center;
+            z-index: -1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            padding: 3rem 0;
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+            font-weight: 900;
+            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero h1 span {
+            background: linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 700px;
+            font-weight: 300;
+        }
+
+        .hero-highlight {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: 20px;
+            margin: 3rem 0;
+            border-left: 4px solid var(--primary);
+            backdrop-filter: blur(10px);
+            animation: pulse 2s infinite;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .hero-highlight p {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            margin: 0;
+            line-height: 1.4;
+        }
+
+        .date-badge {
+            display: inline-flex;
+            align-items: center;
+            background: var(--accent);
+            color: var(--dark);
+            padding: 1.2rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 800;
+            margin: 2rem 0;
+            font-size: 1.3rem;
+            box-shadow: 0 5px 20px rgba(255, 193, 7, 0.4);
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .date-badge i {
+            margin-right: 1rem;
+            font-size: 1.8rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 2.5rem;
+        }
+
+        /* Formation gratuite */
+        .free-training {
+            background: linear-gradient(135deg, #2c3e50 0%, #1a2530 100%);
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 4rem 0;
+            border: 2px solid var(--accent);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .free-training::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('images/img2.avif');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.1;
+            z-index: -1;
+        }
+
+        .free-training-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--secondary);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            transform: rotate(5deg);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .free-training h2 {
+            font-size: 2.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent);
+        }
+
+        .free-training h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .free-training ul {
+            list-style: none;
+            margin: 2rem 0;
+        }
+
+        .free-training ul li {
+            margin-bottom: 1rem;
+            padding-left: 2rem;
+            position: relative;
+            font-size: 1.1rem;
+        }
+
+        .free-training ul li:before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--secondary);
+            font-weight: bold;
+            font-size: 1.3rem;
+        }
+
+        /* Objectifs sociaux */
+        .social-mission {
+            padding: 8rem 0;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .social-mission h2 {
+            font-size: 3.5rem;
+            margin-bottom: 3rem;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .mission-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .mission-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 3rem 2rem;
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mission-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .mission-icon {
+            font-size: 3.5rem;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+        }
+
+        .mission-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+
+        .mission-card p {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Stats Section */
+        .stats {
+            padding: 8rem 0;
+            position: relative;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 3rem 2rem;
+            text-align: center;
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: var(--primary);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .stat-number {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-text {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: white;
+        }
+
+        /* Services Section */
+        .services {
+            padding: 8rem 0;
+            position: relative;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 5rem;
+        }
+
+        .section-title h2 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title h2:after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 5px;
+            background: var(--primary);
+            border-radius: 5px;
+        }
+
+        .section-title p {
+            color: rgba(255, 255, 255, 0.7);
+            max-width: 700px;
+            margin: 2rem auto 0;
+            font-size: 1.3rem;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+        }
+
+        .service-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 25px;
+            overflow: hidden;
+            transition: var(--transition);
+            position: relative;
+            z-index: 1;
+            transform: translateY(20px);
+            opacity: 0;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: var(--shadow);
+        }
+
+        .service-card.animate {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .service-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .service-icon {
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4.5rem;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-icon:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            opacity: 0.7;
+            z-index: -1;
+        }
+
+        .service-content {
+            padding: 2.5rem;
+        }
+
+        .service-content h3 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+
+        .service-content p {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .service-content ul {
+            list-style: none;
+            margin-top: 1.5rem;
+        }
+
+        .service-content ul li {
+            margin-bottom: 0.8rem;
+            position: relative;
+            padding-left: 2rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .service-content ul li:before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--secondary);
+            font-weight: bold;
+            font-size: 1.3rem;
+        }
+
+        .highlight {
+            background: rgba(255, 193, 7, 0.15);
+            padding: 1rem;
+            border-radius: 10px;
+            margin-top: 1.5rem;
+            font-weight: 700;
+            border-left: 3px solid var(--accent);
+        }
+
+        /* CTA Section */
+        .cta {
+            padding: 10rem 0;
+            position: relative;
+            overflow: hidden;
             text-align: center;
         }
-        
-        .form-group {
-            margin-bottom: 20px;
-        }
-        
-        label {
-            display: block;
-            margin-bottom: 8px;
-            color: #34495e;
-            font-weight: 500;
-        }
-        
-        input {
+
+        .cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            font-size: 16px;
-            transition: border-color 0.3s;
+            height: 100%;
+            background: 
+                linear-gradient(rgba(10, 20, 30, 0.9), rgba(10, 20, 30, 0.9)),
+                url('images/img3.avif');
+            background-size: cover;
+            background-position: center;
+            z-index: -1;
         }
-        
-        input:focus {
-            border-color: #3498db;
-            outline: none;
-            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+
+        .cta-content {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            margin: 0 auto;
         }
-        
-        button {
-            background-color: #3498db;
-            color: white;
+
+        .cta h2 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .cta p {
+            font-size: 1.5rem;
+            margin-bottom: 3rem;
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal {
+            background: linear-gradient(135deg, #1a2a3a 0%, #0c1a25 100%);
+            border-radius: 25px;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            position: relative;
+            transform: translateY(-50px);
+            transition: transform 0.5s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+        }
+
+        .modal-overlay.active .modal {
+            transform: translateY(0);
+        }
+
+        .modal-header {
+            padding: 2rem;
+            background: rgba(0, 0, 0, 0.3);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 2rem;
+            color: var(--accent);
+        }
+
+        .close-modal {
+            background: none;
             border: none;
-            border-radius: 6px;
-            padding: 14px 20px;
-            font-size: 16px;
+            color: white;
+            font-size: 2rem;
             cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .close-modal:hover {
+            color: var(--primary);
+            transform: rotate(90deg);
+        }
+
+        .modal-body {
+            padding: 3rem;
+        }
+
+        .form-title {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            color: white;
+            text-align: center;
+        }
+
+        .form-subtitle {
+            color: var(--accent);
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 1.2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
             width: 100%;
-            transition: background-color 0.3s;
+            padding: 1rem 1.5rem;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: white;
+            font-size: 1rem;
+            font-family: 'Raleway', sans-serif;
         }
-        
-        button:hover {
-            background-color: #2980b9;
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
         }
-        
-        button:disabled {
-            background-color: #bdc3c7;
-            cursor: not-allowed;
-        }
-        
-        .status-message {
-            margin-top: 20px;
-            padding: 10px;
-            border-radius: 6px;
+
+        .success-message {
+            background: rgba(40, 167, 69, 0.2);
+            border: 1px solid var(--secondary);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
             text-align: center;
             display: none;
         }
-        
-        .success {
-            background-color: #d4edda;
-            color: #155724;
+
+        /* Footer */
+        footer {
+            background: rgba(5, 10, 15, 0.95);
+            padding: 6rem 0 3rem;
+            position: relative;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 4rem;
+        }
+
+        .footer-col h3 {
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            color: var(--accent);
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        .footer-col h3:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: var(--primary);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 1.2rem;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: var(--transition);
+            font-size: 1.1rem;
             display: block;
         }
-        
-        .error {
-            background-color: #f8d7da;
-            color: #721c24;
-            display: block;
+
+        .footer-links a:hover {
+            color: var(--primary);
+            transform: translateX(5px);
         }
-        
-        .loading {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid rgba(255,255,255,.3);
+
+        .contact-info-footer {
+            margin-bottom: 1.8rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 1.2rem;
+        }
+
+        .contact-info-footer i {
+            color: var(--secondary);
+            margin-top: 0.3rem;
+            font-size: 1.3rem;
+        }
+
+        .contact-info-footer div {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.1rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
             border-radius: 50%;
-            border-top-color: #fff;
-            animation: spin 1s ease-in-out infinite;
-            margin-right: 10px;
+            color: white;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background: var(--primary);
+            transform: translateY(-5px);
+        }
+        .hamburger{
+            display: none;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 3rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 1rem;
+        }
+
+        /* Animations */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 107, 0, 0.5); }
+            70% { box-shadow: 0 0 0 20px rgba(255, 107, 0, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 107, 0, 0); }
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 3.5rem;
+            }
+            
+            .services-grid {
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+            position: fixed;
+            top: 80px;
+            left: -100%;
+            flex-direction: column;
+            background: rgba(10, 20, 30, 0.95);
+            width: 100%;
+            text-align: center;
+            transition: 0.4s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            padding: 2rem 0;
+            z-index: 999;
+            backdrop-filter: blur(10px);
+        }
+            
+            .nav-links.active {
+                left: 0;
+            }
+            
+            .nav-links li {
+                margin: 1.8rem 0;
+            }
+            
+            .hamburger {
+            display: block;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 2rem;
+            z-index: 1001; /* S'assurer qu'il est au-dessus */
+            position: relative; /* Positionnement correct */
+        }
+
+
+            
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .hero-highlight p {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* Mobile specific */
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2.5rem; /* Taille réduite pour mobile */
+            }
+            
+            .hero p {
+                font-size: 1.2rem; /* Taille réduite pour mobile */
+            }
+            
+            .hero-highlight p {
+                font-size: 1.3rem; /* Taille réduite pour mobile */
+            }
+            
+            .date-badge {
+                font-size: 1.1rem;
+                padding: 1rem 1.5rem;
+            }
+            
+            .free-training {
+                padding: 2rem;
+            }
+            
+            .free-training h2 {
+                font-size: 2.2rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2.2rem; /* Taille réduite pour mobile */
+            }
+            
+            .section-title p {
+                font-size: 1.1rem; /* Taille réduite pour mobile */
+            }
+            
+            .cta h2 {
+                font-size: 2.2rem; /* Taille réduite pour mobile */
+            }
+            
+            .cta p {
+                font-size: 1.2rem; /* Taille réduite pour mobile */
+            }
+            
+            .service-content h3 {
+                font-size: 1.7rem; /* Taille réduite pour mobile */
+            }
+            
+            .mission-card h3 {
+                font-size: 1.5rem; /* Taille réduite pour mobile */
+            }
+            
+            .stat-text {
+                font-size: 1.2rem; /* Taille réduite pour mobile */
+            }
+        }
+
+
+        /* Styles pour le bouton flottant */
+        .floating-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 999;
+            animation: pulse 2s infinite;
+            transform-origin: center;
         }
         
-        @keyframes spin {
-            to { transform: rotate(360deg); }
+        .floating-btn a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #FF6B00 0%, #FFC107 100%);
+            color: white;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            padding: 16px 24px;
+            border-radius: 50px;
+            box-shadow: 0 8px 25px rgba(255, 107, 0, 0.5);
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
         }
+        
+        .floating-btn a:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #FFC107 0%, #FF6B00 100%);
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: -1;
+        }
+        
+        .floating-btn a:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 12px 35px rgba(255, 107, 0, 0.7);
+        }
+        
+        .floating-btn a:hover:before {
+            opacity: 1;
+        }
+        
+        .floating-btn a i {
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+        
+        /* Animation pulsation */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .floating-btn {
+                bottom: 20px;
+                right: 20px;
+            }
+            
+            .floating-btn a {
+                font-size: 1rem;
+                padding: 14px 20px;
+            }
+            
+            .floating-btn a i {
+                margin-right: 8px;
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .floating-btn a span {
+                display: none;
+            }
+            
+            .floating-btn a i {
+                margin-right: 0;
+                font-size: 1.2rem;
+            }
+            
+            .floating-btn a {
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+        }
+
+
+
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Formulaire d'inscription</h1>
-        <form id="inscriptionForm">
-            <div class="form-group">
-                <label for="nom">Nom complet</label>
-                <input type="text" id="nom" name="nom" required>
+    <!-- Header -->
+    <header>
+        <div class="container navbar">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">
+                    <img src="1000791665-removebg-preview(1).png" alt="logo" style="width: 200px; height: 200px; object-fit: contain;">
+                </div>
+                SUCCESS<span>+</span>
+            </a>
+            <button class="hamburger">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <ul class="nav-links">
+                <li><a href="index.html" class="active">Accueil</a></li>
+                <li><a href="formations.html">Formations</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li>
+                    <button class="btn open-modal-btn">Inscrivez-vous</button>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Bouton flottant -->
+    <div class="floating-btn">
+        <a href="inscriptions.html">
+            <i class="fas fa-pencil-alt"></i>
+            <span>Inscription Gratuite</span>
+        </a>
+    </div>
+
+    <!-- Page Accueil -->
+    <section class="hero">
+        <div class="container hero-content">
+            <div class="hero-text">
+                <h1>Construit ton projet, <span>écris ton avenir</span></h1>
+                <p>Arrêtez de rêver seul, passez à l'action avec SUCCESS+</p>
+                
+                <div class="hero-highlight">
+                    <p>TON RÊVE, C'EST DE FAIRE DES MILLIONS... MAIS TON PROJET VAUT-IL MÊME 1 € AUJOURD'HUI ?</p>
+                </div>
+                
+                <div class="date-badge">
+                    <i  class="fas fa-calendar-alt"></i> Prochaine session démarre le 18 Août - Places limitées
+                </div>
+                
+                <div class="cta-buttons">
+                    <button class="btn open-modal-btn">Réserver ma place</button>
+                    <a href="formations.html" class="btn btn-secondary">Découvrir nos formations</a>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="email">Adresse email</label>
-                <input type="email" id="email" name="email" required>
+        </div>
+    </section>
+
+    <!-- Formation gratuite -->
+    <section class="container">
+        <div class="free-training">
+            <div class="free-training-badge">
+                FORMATION GRATUITE
             </div>
-            <button type="submit" id="submitBtn">Envoyer</button>
-        </form>
-        <div id="statusMessage" class="status-message"></div>
+            <h2>Formation Développement Web</h2>
+            <h3>Débute le 18 Août - Places limitées</h3>
+            <p>Profitez de notre formation intensive de 3 jours pour maîtriser les technologies web modernes et lancer votre carrière dans le numérique.</p>
+            
+            <ul>
+                <li>HTML5, CSS3 et JavaScript moderne</li>
+                <li>Frameworks frontend (React, Vue)</li>
+                <li>Backend avec Node.js et Express</li>
+                <li>Base de données MongoDB</li>
+                <li>Déploiement de sites web</li>
+                <li>Projet final avec portfolio</li>
+            </ul>
+            
+            <div class="cta-buttons">
+                <button class="btn open-modal-btn">S'inscrire gratuitement</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Objectifs sociaux -->
+    <section class="social-mission">
+        <div class="container">
+            <h2>Notre Mission Sociale</h2>
+            <p>Chez SUCCESS+, nous croyons en un avenir où chaque individu a les moyens de construire sa propre réussite</p>
+            
+            <div class="mission-cards">
+                <div class="mission-card">
+                    <div class="mission-icon">
+                        <i class="fas fa-hand-holding-heart"></i>
+                    </div>
+                    <h3>Accessibilité pour tous</h3>
+                    <p>Offrir des formations de qualité à des prix abordables, voire gratuites, pour les personnes issues de milieux défavorisés.</p>
+                </div>
+                
+                <div class="mission-card">
+                    <div class="mission-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3>Autonomisation</h3>
+                    <p>Fournir les compétences nécessaires pour créer des entreprises durables et générer des revenus indépendants.</p>
+                </div>
+                
+                <div class="mission-card">
+                    <div class="mission-icon">
+                        <i class="fas fa-globe-africa"></i>
+                    </div>
+                    <h3>Développement local</h3>
+                    <p>Contribuer au développement économique des communautés locales en formant des professionnels qualifiés.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">87%</div>
+                    <div class="stat-text">Emplois avec compétences digitales</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-number">62%</div>
+                    <div class="stat-text">Augmentation de CA en 3 mois</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-number">45</div>
+                    <div class="stat-text">Jours pour un premier contrat</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-text">Satisfaction des apprenants</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="services">
+        <div class="container">
+            <div class="section-title">
+                <h2>Nos Actions Concrètes</h2>
+                <p>Chez SUCCESS+, nous ne faisons pas que parler, nous agissons pour votre succès</p>
+            </div>
+            
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <div class="service-content">
+                        <h3>Formation aux métiers qui recrutent</h3>
+                        <p>87% des emplois en Afrique nécessiteront des compétences digitales d'ici 2030 (Banque Mondiale)</p>
+                        <ul>
+                            <li>Développement web & mobile</li>
+                            <li>Marketing digital & community management</li>
+                            <li>Design graphique (UI/UX)</li>
+                            <li>Cybersécurité</li>
+                            <li>Data science & IA</li>
+                        </ul>
+                        <p class="highlight">Résultat : Nos apprenants signent leur premier contrat PRO en moyenne sous 45 jours !</p>
+                    </div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="service-content">
+                        <h3>Gestion comme un pro</h3>
+                        <p>3 startups sur 4 échouent par mauvaise gestion (rapport GSER)</p>
+                        <ul>
+                            <li>Gestion de projet</li>
+                            <li>Comptabilité & finance</li>
+                            <li>Création d'entreprise</li>
+                            <li>Commerce international</li>
+                            <li>Management</li>
+                        </ul>
+                        <p class="highlight">Résultat : 62% de nos entrepreneurs voient leur CA augmenter dès le 3e mois</p>
+                    </div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-seedling"></i>
+                    </div>
+                    <div class="service-content">
+                        <h3>Révolution agricole</h3>
+                        <p>L'Afrique importe 55% de sa nourriture alors qu'elle a 65% des terres cultivables mondiales (FAO)</p>
+                        <ul>
+                            <li>Agroécologie</li>
+                            <li>Transformation agroalimentaire</li>
+                            <li>Entrepreneuriat agricole</li>
+                            <li>Commercialisation internationale</li>
+                            <li>Valorisation des produits locaux</li>
+                        </ul>
+                        <p class="highlight">Résultat : Doublez vos revenus agricoles grâce à la valeur ajoutée !</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Votre projet mérite de voir le jour</h2>
+                <p>Ne laissez pas vos ambitions dormir dans un tiroir. Rejoignez-nous et passez à l'action dès maintenant !</p>
+                
+                <div class="cta-buttons">
+                    <button class="btn open-modal-btn">Réserver ma place</button>
+                    <a href="contact.html" class="btn btn-secondary">Nous contacter</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>SUCCESS+</h3>
+                    <p>Construit ton projet, écris ton avenir</p>
+                    <div class="social-links">
+                        <a href="inscriptions.html"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Liens rapides</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Accueil</a></li>
+                        <li><a href="formations.html">Formations</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="#">Blog</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Contact</h3>
+                    <div class="contact-info-footer">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>Tripperie 11, Mons, Belgium</div>
+                    </div>
+                    <div class="contact-info-footer">
+                        <i class="fas fa-phone"></i>
+                        <div>+32 4 75 33 14 26</div>
+                    </div>
+                    <div class="contact-info-footer">
+                        <i class="fab fa-whatsapp"></i>
+                        <div>+32 475 33 14 26</div>
+                    </div>
+                    <div class="contact-info-footer">
+                        <i class="fas fa-envelope"></i>
+                        <div>success.ONG@outlook.be</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                &copy; 2025 SUCCESS+. Tous droits réservés.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal -->
+    <div class="modal-overlay" id="modal-overlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Inscription à la formation</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <h3 class="form-title">Réservez votre place</h3>
+                <p class="form-subtitle">Formation démarre le 18 Août - Places limitées</p>
+                
+                <div class="success-message" id="success-message">
+                    Votre inscription a été enregistrée avec succès! Vous allez recevoir un email de confirmation.
+                </div>
+                
+                <form id="contact-form">
+                    <div class="form-group">
+                        <label for="name">Nom complet</label>
+                        <input type="text" id="name" name="name" required placeholder="Votre nom complet">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required placeholder="votre@email.com">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone">Téléphone</label>
+                        <input type="tel" id="phone" name="phone" required placeholder="+32 4 75 33 14 26">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="formation">Formation choisie</label>
+                        <select id="formation" name="formation" required>
+                            <option value="">Sélectionnez une formation</option>
+                            <option value="Développement web et mobile" selected>Développement web et mobile (18 Août)</option>
+                            <option value="Community management">Community management</option>
+                            <option value="Graphisme & design (UI/UX)">Graphisme & design (UI/UX)</option>
+                            <option value="Cybersécurité">Cybersécurité</option>
+                            <option value="Data science / Analyse de données">Data science / Analyse de données</option>
+                            <option value="Intelligence artificielle (IA)">Intelligence artificielle (IA)</option>
+                            <option value="Gestion de projet">Gestion de projet</option>
+                            <option value="Comptabilité et finance">Comptabilité et finance</option>
+                            <option value="Entrepreneuriat">Entrepreneuriat</option>
+                            <option value="Commerce international">Commerce international</option>
+                            <option value="Agroécologie / agriculture durable">Agroécologie / agriculture durable</option>
+                            <option value="Transformation agroalimentaire">Transformation agroalimentaire</option>
+                            <option value="Entrepreneuriat agricole">Entrepreneuriat agricole</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message">Vos objectifs et attentes</label>
+                        <textarea id="message" name="message" rows="3" placeholder="Décrivez brièvement votre projet et ce que vous espérez de cette formation"></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-secondary" style="width: 100%;">
+                        <i class="fas fa-paper-plane"></i> Envoyer ma demande
+                    </button>
+                    
+                    <p class="form-note" style="text-align: center; margin-top: 1rem; color: rgba(255,255,255,0.6);">
+                        <i class="fas fa-lock"></i> Vos informations sont sécurisées et ne seront jamais partagées
+                    </p>
+                </form>
+            </div>
+        </div>
     </div>
 
     <script>
+
+
+// Animation supplémentaire au survol
         document.addEventListener('DOMContentLoaded', function() {
-            const form = document.getElementById('inscriptionForm');
-            const submitBtn = document.getElementById('submitBtn');
-            const statusMessage = document.getElementById('statusMessage');
+            const btn = document.querySelector('.floating-btn a');
             
-            form.addEventListener('submit', async function(e) {
-                e.preventDefault();
-                
-                // Récupération des données du formulaire
-                const nom = document.getElementById('nom').value;
-                const email = document.getElementById('email').value;
-                
-                // Validation basique
-                if (!nom || !email) {
-                    showStatus('Veuillez remplir tous les champs', 'error');
-                    return;
-                }
-                
-                if (!isValidEmail(email)) {
-                    showStatus('Veuillez entrer une adresse email valide', 'error');
-                    return;
-                }
-                
-                // Désactiver le bouton pendant l'envoi
-                submitBtn.disabled = true;
-                submitBtn.innerHTML = '<span class="loading"></span> Envoi en cours...';
-                
-                try {
-                    // Envoi des données à Google Apps Script
-                    const response = await sendDataToGoogleSheets(nom, email);
-                    
-                    if (response.result === 'success') {
-                        showStatus('Données enregistrées avec succès! Un PDF a été envoyé à votre ademail.', 'success');
-                        form.reset();
-                    } else {
-                        showStatus('Une erreur est survenue: ' + response.message, 'error');
-                    }
-                } catch (error) {
-                    console.error('Erreur:', error);
-                    showStatus('Erreur de connexion. Veuillez réessayer.', 'error');
-                } finally {
-                    // Réactiver le bouton
-                    submitBtn.disabled = false;
-                    submitBtn.innerHTML = 'Envoyer';
+            btn.addEventListener('mouseenter', function() {
+                this.style.animation = 'none';
+                setTimeout(() => {
+                    this.style.animation = 'pulse 2s infinite';
+                }, 10);
+            });
+        });
+        document.addEventListener('DOMContentLoaded', function() {
+            // Menu mobile
+            const hamburger = document.querySelector('.hamburger');
+            const navMenu = document.querySelector('.nav-links');
+            
+            hamburger.addEventListener('click', function() {
+                navMenu.classList.toggle('active');
+                // Changement d'icône
+                if (navMenu.classList.contains('active')) {
+                    hamburger.innerHTML = '<i class="fas fa-times"></i>';
+                } else {
+                    hamburger.innerHTML = '<i class="fas fa-bars"></i>';
                 }
             });
             
-            function showStatus(message, type) {
-                statusMessage.textContent = message;
-                statusMessage.className = 'status-message ' + type;
-            }
-            
-            function isValidEmail(email) {
-                const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                return re.test(email);
-            }
-            
-            async function sendDataToGoogleSheets(nom, email) {
-                // Remplacez cette URL par l'URL de déploiement de votre Web App Google Apps Script
-                const scriptURL = 'https://script.google.com/macros/s/AKfycbwxIA2DAuHyrxLodA2Z_wJg3dVMj6JXtvE8dsLO7VR8jOWIR4-GWwzST7q9KYKlpTnF3Q/exec';
-                
-                const formData = new FormData();
-                formData.append('nom', nom);
-                formData.append('email', email);
-                formData.append('timestamp', new Date().toISOString());
-                
-                const response = await fetch(scriptURL, {
-                    method: 'POST',
-                    body: formData
+            // Animation des éléments au défilement
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate');
+                    }
                 });
+            }, { threshold: 0.1 });
+            
+            document.querySelectorAll('.service-card').forEach(card => {
+                observer.observe(card);
+            });
+            
+            // Modal functionality
+            const modal = document.getElementById('modal-overlay');
+            const openModalButtons = document.querySelectorAll('.open-modal-btn');
+            const closeModal = document.querySelector('.close-modal');
+            const successMessage = document.getElementById('success-message');
+            const contactForm = document.getElementById('contact-form');
+            
+            openModalButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    modal.classList.add('active');
+                    document.body.style.overflow = 'hidden'; // Prevent scrolling
+                });
+            });
+            
+            closeModal.addEventListener('click', function() {
+                modal.classList.remove('active');
+                document.body.style.overflow = ''; // Restore scrolling
+            });
+            
+            // Close modal when clicking outside
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    modal.classList.remove('active');
+                    document.body.style.overflow = ''; // Restore scrolling
+                }
+            });
+            
+            // Form submission
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
                 
-                return response.json();
-            }
+                // Simulate form submission
+                setTimeout(function() {
+                    contactForm.reset();
+                    successMessage.style.display = 'block';
+                    
+                    // Hide success message after 5 seconds
+                    setTimeout(function() {
+                        successMessage.style.display = 'none';
+                        modal.classList.remove('active');
+                        document.body.style.overflow = ''; // Restore scrolling
+                    }, 5000);
+                }, 1000);
+            });
+            
+            // Fermer le menu quand on clique sur un lien
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.addEventListener('click', function() {
+                    navMenu.classList.remove('active');
+                    hamburger.innerHTML = '<i class="fas fa-bars"></i>';
+                });
+            });
         });
     </script>
 </body>
