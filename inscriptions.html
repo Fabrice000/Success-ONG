@@ -750,7 +750,8 @@
                     Vous allez recevoir un email de confirmation avec les détails de la formation.
                 </div>
                 
-                <form id="registration-form" method="POST" action="process.php">
+                <form id="registration-form" method="POST" action="./process.php">
+                    <input type="hidden" name="action" value="submit_form">
                     <div class="form-row">
                         <div class="form-group">
                             <label for="firstName">Prénom</label>
