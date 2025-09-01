@@ -299,8 +299,8 @@
             margin-top: 2.5rem;
         }
 
-        /* Formation gratuite */
-        .free-training {
+        /* Formation premium */
+        .premium-training {
             background: linear-gradient(135deg, #2c3e50 0%, #1a2530 100%);
             border-radius: 20px;
             padding: 3rem;
@@ -311,7 +311,7 @@
             overflow: hidden;
         }
 
-        .free-training::before {
+        .premium-training::before {
             content: '';
             position: absolute;
             top: 0;
@@ -325,11 +325,11 @@
             z-index: -1;
         }
 
-        .free-training-badge {
+        .premium-training-badge {
             position: absolute;
             top: 20px;
             right: 20px;
-            background: var(--secondary);
+            background: var(--primary);
             color: white;
             padding: 0.5rem 1.5rem;
             border-radius: 50px;
@@ -338,31 +338,42 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
 
-        .free-training h2 {
+        .price-badge {
+            display: inline-block;
+            background: var(--secondary);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            margin: 1rem 0;
+            font-size: 1.2rem;
+        }
+
+        .premium-training h2 {
             font-size: 2.8rem;
             margin-bottom: 1.5rem;
             color: var(--accent);
         }
 
-        .free-training h3 {
+        .premium-training h3 {
             font-size: 1.8rem;
             margin-bottom: 1rem;
             color: white;
         }
 
-        .free-training ul {
+        .premium-training ul {
             list-style: none;
             margin: 2rem 0;
         }
 
-        .free-training ul li {
+        .premium-training ul li {
             margin-bottom: 1rem;
             padding-left: 2rem;
             position: relative;
             font-size: 1.1rem;
         }
 
-        .free-training ul li:before {
+        .premium-training ul li:before {
             content: '✓';
             position: absolute;
             left: 0;
@@ -714,6 +725,8 @@
         .modal-title {
             font-size: 2rem;
             color: var(--accent);
+            text-align: center;
+            width: 100%;
         }
 
         .close-modal {
@@ -723,6 +736,9 @@
             font-size: 2rem;
             cursor: pointer;
             transition: var(--transition);
+            position: absolute;
+            right: 20px;
+            top: 20px;
         }
 
         .close-modal:hover {
@@ -985,11 +1001,11 @@
                 padding: 1rem 1.5rem;
             }
             
-            .free-training {
+            .premium-training {
                 padding: 2rem;
             }
             
-            .free-training h2 {
+            .premium-training h2 {
                 font-size: 2.2rem;
             }
             
@@ -1125,7 +1141,53 @@
             }
         }
 
+        /* Styles pour les nouveaux boutons de certificat */
+        .certif-buttons {
+            display: flex;
+            gap: 1rem;
+            margin: 2rem 0;
+            justify-content: center;
+        }
 
+        .certif-btn {
+            display: inline-flex;
+            align-items: center;
+            background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            box-shadow: 0 5px 15px rgba(108, 92, 231, 0.4);
+        }
+
+        .certif-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(108, 92, 231, 0.6);
+        }
+
+        .certif-btn i {
+            margin-right: 0.5rem;
+        }
+
+        .btn-certif {
+            background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
+            box-shadow: 0 5px 15px rgba(108, 92, 231, 0.4);
+        }
+
+        .btn-certif:hover {
+            box-shadow: 0 8px 20px rgba(108, 92, 231, 0.6);
+        }
+
+        .btn-verify {
+            background: linear-gradient(135deg, #00b894 0%, #55efc4 100%);
+            box-shadow: 0 5px 15px rgba(0, 184, 148, 0.4);
+        }
+
+        .btn-verify:hover {
+            box-shadow: 0 8px 20px rgba(0, 184, 148, 0.6);
+        }
 
     </style>
 </head>
@@ -1146,6 +1208,8 @@
             <ul class="nav-links">
                 <li><a href="index.html" class="active">Accueil</a></li>
                 <li><a href="formations.html">Formations</a></li>
+                <li><a href="certif.html">Certificats</a></li>
+                <li><a href="verification.html">Vérification</a></li>
                 <li><a href="contact.html">Contact</a></li>
                 <li>
                     <button class="btn open-modal-btn">Inscrivez-vous</button>
@@ -1156,9 +1220,9 @@
 
     <!-- Bouton flottant -->
     <div class="floating-btn">
-        <a href="inscriptions.html">
+        <a href="#formation">
             <i class="fas fa-pencil-alt"></i>
-            <span>Inscription Gratuite</span>
+            <span>Inscription</span>
         </a>
     </div>
 
@@ -1170,42 +1234,69 @@
                 <p>Arrêtez de rêver seul, passez à l'action avec SUCCESS+</p>
                 
                 <div class="hero-highlight">
-                    <p>TON RÊVE, C'EST DE FAIRE DES MILLIONS... MAIS TON PROJET VAUT-IL MÊME 1 € AUJOURD'HUI ?</p>
+                    <p>FORMATION COMPLÈTE EN DÉVELOPPEMENT WEB ET MOBILE - 2 MOIS INTENSIFS</p>
                 </div>
                 
                 <div class="date-badge">
-                    <i  class="fas fa-calendar-alt"></i> Prochaine session démarre le 18 Août - Places limitées
+                    <i class="fas fa-calendar-alt"></i> Prochaine session démarre le 18 Août - Places limitées
                 </div>
                 
                 <div class="cta-buttons">
                     <button class="btn open-modal-btn">Réserver ma place</button>
-                    <a href="formations.html" class="btn btn-secondary">Découvrir nos formations</a>
+                    <a href="#formation" class="btn btn-secondary">Découvrir la formation</a>
+                </div>
+
+                <div class="certif-buttons">
+                    <a href="certif.html" class="certif-btn btn-certif">
+                        <i class="fas fa-certificate"></i> Paiement Certificat
+                    </a>
+                    <a href="verification.html" class="certif-btn btn-verify">
+                        <i class="fas fa-check-circle"></i> Vérifier Certificat
+                    </a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Formation gratuite -->
-    <section class="container">
-        <div class="free-training">
-            <div class="free-training-badge">
-                FORMATION GRATUITE
+    <!-- Formation premium -->
+    <section class="container" id="formation">
+        <div class="premium-training">
+            <div class="premium-training-badge">
+                FORMATION PREMIUM
             </div>
-            <h2>Formation Développement Web</h2>
-            <h3>Débute le 18 Août - Places limitées</h3>
-            <p>Profitez de notre formation intensive de 3 jours pour maîtriser les technologies web modernes et lancer votre carrière dans le numérique.</p>
+            <div class="price-badge">
+                Prix: 35.000 FCFA
+            </div>
+            <h2>Formation Développement Web et Mobile</h2>
+            <h3>Débute le 18 Août - Durée: 2 mois - Places limitées</h3>
+            <p>Maîtrisez les technologies web et mobile modernes et lancez votre carrière dans le numérique avec notre formation intensive de 2 mois.</p>
             
+            <h3>📚 Programme de Formation – Développement Web Avancé (1er mois)</h3>
             <ul>
-                <li>HTML5, CSS3 et JavaScript moderne</li>
-                <li>Frameworks frontend (React, Vue)</li>
-                <li>Backend avec Node.js et Express</li>
-                <li>Base de données MongoDB</li>
-                <li>Déploiement de sites web</li>
-                <li>Projet final avec portfolio</li>
+                <li>HTML5 avancé (formulaires, sémantique, multimédia)</li>
+                <li>CSS3 avancé (Flexbox, Grid, animations, responsive design)</li>
+                <li>JavaScript avancé (DOM, fonctions, localStorage)</li>
+                <li>Backend avec PHP (variables superglobales, formulaires, sessions)</li>
+                <li>Backend avec Python (http.server, gestion requêtes)</li>
+                <li>Bases de données MySQL (création, requêtes, jointures)</li>
+                <li>Connexion Backend/MySQL (PHP et Python)</li>
+                <li>Projet pratique: application web dynamique</li>
+            </ul>
+
+            <h3>📱 Programme de Formation – Développement Mobile (2ème mois)</h3>
+            <ul>
+                <li>Applications mobiles hybrides vs natives vs PWA</li>
+                <li>Création d'une Progressive Web App (PWA)</li>
+                <li>JavaScript pour mobile (stockage, API device)</li>
+                <li>Utilisation de l'API Camera, GPS et capteurs</li>
+                <li>Gestion de données et API REST</li>
+                <li>Sauvegarde hors-ligne et synchronisation</li>
+                <li>Développement d'une application mobile complète</li>
+                <li>Exportation en APK (Android)</li>
             </ul>
             
             <div class="cta-buttons">
-                <button class="btn open-modal-btn">S'inscrire gratuitement</button>
+                <button class="btn open-modal-btn">S'inscrire maintenant</button>
             </div>
         </div>
     </section>
@@ -1345,6 +1436,15 @@
                     <button class="btn open-modal-btn">Réserver ma place</button>
                     <a href="contact.html" class="btn btn-secondary">Nous contacter</a>
                 </div>
+
+                <div class="certif-buttons">
+                    <a href="certif.html" class="certif-btn btn-certif">
+                        <i class="fas fa-certificate"></i> Paiement Certificat
+                    </a>
+                    <a href="verification.html" class="certif-btn btn-verify">
+                        <i class="fas fa-check-circle"></i> Vérifier Certificat
+                    </a>
+                </div>
             </div>
         </div>
     </section>
@@ -1357,7 +1457,7 @@
                     <h3>SUCCESS+</h3>
                     <p>Construit ton projet, écris ton avenir</p>
                     <div class="social-links">
-                        <a href="inscriptions.html"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
                         <a href="#"><i class="fab fa-twitter"></i></a>
                         <a href="#"><i class="fab fa-instagram"></i></a>
                         <a href="#"><i class="fab fa-linkedin-in"></i></a>
@@ -1369,8 +1469,9 @@
                     <ul class="footer-links">
                         <li><a href="index.html">Accueil</a></li>
                         <li><a href="formations.html">Formations</a></li>
+                        <li><a href="certif.html">Certificats</a></li>
+                        <li><a href="verification.html">Vérification</a></li>
                         <li><a href="contact.html">Contact</a></li>
-                        <li><a href="#">Blog</a></li>
                     </ul>
                 </div>
                 
@@ -1410,7 +1511,7 @@
             </div>
             <div class="modal-body">
                 <h3 class="form-title">Réservez votre place</h3>
-                <p class="form-subtitle">Formation démarre le 18 Août - Places limitées</p>
+                <p class="form-subtitle">Formation Développement Web et Mobile - 2 mois - 35.000 FCFA - Débute le 18 Août</p>
                 
                 <div class="success-message" id="success-message">
                     Votre inscription a été enregistrée avec succès! Vous allez recevoir un email de confirmation.
@@ -1436,19 +1537,9 @@
                         <label for="formation">Formation choisie</label>
                         <select id="formation" name="formation" required>
                             <option value="">Sélectionnez une formation</option>
-                            <option value="Développement web et mobile" selected>Développement web et mobile (18 Août)</option>
-                            <option value="Community management">Community management</option>
-                            <option value="Graphisme & design (UI/UX)">Graphisme & design (UI/UX)</option>
-                            <option value="Cybersécurité">Cybersécurité</option>
-                            <option value="Data science / Analyse de données">Data science / Analyse de données</option>
-                            <option value="Intelligence artificielle (IA)">Intelligence artificielle (IA)</option>
-                            <option value="Gestion de projet">Gestion de projet</option>
-                            <option value="Comptabilité et finance">Comptabilité et finance</option>
-                            <option value="Entrepreneuriat">Entrepreneuriat</option>
-                            <option value="Commerce international">Commerce international</option>
-                            <option value="Agroécologie / agriculture durable">Agroécologie / agriculture durable</option>
-                            <option value="Transformation agroalimentaire">Transformation agroalimentaire</option>
-                            <option value="Entrepreneuriat agricole">Entrepreneuriat agricole</option>
+                            <option value="Développement Web et Mobile (2 mois)" selected>Développement Web et Mobile (2 mois) - 35.000 FCFA</option>
+                            <option value="Développement Web seulement (1 mois)">Développement Web seulement (1 mois) - 20.000 FCFA</option>
+                            <option value="Développement Mobile seulement (1 mois)">Développement Mobile seulement (1 mois) - 20.000 FCFA</option>
                         </select>
                     </div>
                     
@@ -1470,9 +1561,7 @@
     </div>
 
     <script>
-
-
-// Animation supplémentaire au survol
+        // Animation supplémentaire au survol
         document.addEventListener('DOMContentLoaded', function() {
             const btn = document.querySelector('.floating-btn a');
             
@@ -1482,8 +1571,7 @@
                     this.style.animation = 'pulse 2s infinite';
                 }, 10);
             });
-        });
-        document.addEventListener('DOMContentLoaded', function() {
+            
             // Menu mobile
             const hamburger = document.querySelector('.hamburger');
             const navMenu = document.querySelector('.nav-links');
@@ -1566,5 +1654,4 @@
         });
     </script>
 </body>
-
 </html>
