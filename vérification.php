@@ -292,7 +292,7 @@
 <body>
     <div class="container">
         <div class="logo">
-            <img src="1000791665-removebg-preview(1).png" alt="SUCCESS+ Logo">
+            <img src="logo.png" alt="SUCCESS+ Logo">
         </div>
         
         <div class="verification-card">
@@ -303,7 +303,7 @@
                 <input type="hidden" name="action" value="verify_certificate">
 
                 <div class="form-group">
-                    <label for="certificate-number">Numéro d'authentification</label>
+                    <label for="certificate_id">Numéro d'authentification</label>
                     <input type="text" id="certificate_id" name="certificate_id" required placeholder="Ex: SPC-2023-789654123">
                 </div>
                 
@@ -371,97 +371,53 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Références aux éléments du DOM
-            const verificationForm = document.getElementById('verification-form');
-            const modalOverlay = document.getElementById('modal-overlay');
-            const closeModal = document.querySelector('.close-modal');
-            const errorMessage = document.getElementById('error-message');
-            const errorText = document.getElementById('error-text');
-            
-            // Données simulées (à remplacer par une connexion à la base de données réelle)
-            const certificateDatabase = {
-                'SPC-2023-789654123': {
-                    participantName: 'Jean Dupont',
-                    formationName: 'Développement Web',
-                    formationDate: '18-20 Août 2023',
-                    issueDate: '25 Août 2023',
-                    formationDuration: '21 heures'
-                },
-                'SPC-2023-456789123': {
-                    participantName: 'Marie Lambert',
-                    formationName: 'Marketing Digital',
-                    formationDate: '15-17 Septembre 2023',
-                    issueDate: '22 Septembre 2023',
-                    formationDuration: '18 heures'
-                },
-                'SPC-2023-123456789': {
-                    participantName: 'Pierre Gagnon',
-                    formationName: 'Gestion de Projet',
-                    formationDate: '10-12 Octobre 2023',
-                    issueDate: '18 Octobre 2023',
-                    formationDuration: '24 heures'
-                }
-            };
-            
-            // Gestion de la soumission du formulaire
-            verificationForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                const certificateNumber = document.getElementById('certificate-number').value.trim();
-                
-                // Cacher les messages d'erreur précédents
+document.addEventListener('DOMContentLoaded', function() {
+    const verificationForm = document.getElementById('verification-form');
+    const modalOverlay = document.getElementById('modal-overlay');
+    const closeModal = document.querySelector('.close-modal');
+    const errorMessage = document.getElementById('error-message');
+    const errorText = document.getElementById('error-text');
+
+    verificationForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        const formData = new FormData(verificationForm);
+
+        try {
+            const response = await fetch('process.php', {
+                method: 'POST',
+                body: formData
+            });
+            const result = await response.json();
+
+            if (result.success) {
+                const cert = result.data;
+                document.getElementById('cert-number').textContent = cert.certificate_id;
+                document.getElementById('participant-name').textContent = cert.participant_name;
+                document.getElementById('formation-name').textContent = cert.formation_name;
+                document.getElementById('formation-date').textContent = cert.formation_date;
+                document.getElementById('issue-date').textContent = cert.issue_date;
+                document.getElementById('formation-duration').textContent = cert.formation_duration;
+
                 errorMessage.style.display = 'none';
-                
-                // Vérifier si le numéro existe dans la base de données
-                if (certificateDatabase[certificateNumber]) {
-                    // Afficher les informations du certificat
-                    displayCertificateInfo(certificateNumber, certificateDatabase[certificateNumber]);
-                    // Afficher la modal
-                    modalOverlay.classList.add('active');
-                    document.body.style.overflow = 'hidden';
-                } else {
-                    // Afficher un message d'erreur
-                    errorText.textContent = 'Numéro de certificat introuvable. Veuillez vérifier et réessayer.';
-                    errorMessage.style.display = 'block';
-                }
-            });
-            
-            // Fermer la modal
-            closeModal.addEventListener('click', function() {
-                modalOverlay.classList.remove('active');
-                document.body.style.overflow = '';
-            });
-            
-            // Fermer la modal en cliquant à l'extérieur
-            modalOverlay.addEventListener('click', function(e) {
-                if (e.target === modalOverlay) {
-                    modalOverlay.classList.remove('active');
-                    document.body.style.overflow = '';
-                }
-            });
-            
-            // Fonction pour afficher les informations du certificat
-            function displayCertificateInfo(certNumber, certData) {
-                document.getElementById('cert-number').textContent = certNumber;
-                document.getElementById('participant-name').textContent = certData.participantName;
-                document.getElementById('formation-name').textContent = certData.formationName;
-                document.getElementById('formation-date').textContent = certData.formationDate;
-                document.getElementById('issue-date').textContent = certData.issueDate;
-                document.getElementById('formation-duration').textContent = certData.formationDuration;
+                modalOverlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            } else {
+                errorText.textContent = result.message;
+                errorMessage.style.display = 'block';
             }
-            
-            // Animation d'entrée pour la carte de vérification
-            const verificationCard = document.querySelector('.verification-card');
-            verificationCard.style.transform = 'translateY(20px)';
-            verificationCard.style.opacity = '0';
-            
-            setTimeout(() => {
-                verificationCard.style.transition = 'transform 0.5s ease, opacity 0.5s ease';
-                verificationCard.style.transform = 'translateY(0)';
-                verificationCard.style.opacity = '1';
-            }, 100);
-        });
+        } catch (err) {
+            errorText.textContent = 'Erreur de connexion au serveur';
+            errorMessage.style.display = 'block';
+        }
+    });
+
+    closeModal.addEventListener('click', function() {
+        modalOverlay.classList.remove('active');
+        document.body.style.overflow = '';
+    });
+});
+
     </script>
 </body>
 </html>

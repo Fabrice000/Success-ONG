@@ -52,14 +52,15 @@ function cleanInput($data)
   return $data;
 }
 
-function sendJsonResponse($success, $message, $data = null) {
-    header('Content-Type: application/json');
-    echo json_encode([
-        'success' => $success,
-        'message' => $message,
-        'data' => $data
-    ]);
-    exit;
+function sendJsonResponse($success, $message, $data = null)
+{
+  header('Content-Type: application/json');
+  echo json_encode([
+    'success' => $success,
+    'message' => $message,
+    'data' => $data
+  ]);
+  exit;
 }
 
 
@@ -218,44 +219,44 @@ function sendUserConfirmationEmail($user_email, $site_email, $inscription_id, $n
 // TRAITEMENT DU FORMULAIRE
 // ------------------------
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-if (isset($_POST['action'])) {
+  if (isset($_POST['action'])) {
     switch ($_POST['action']) {
-        case 'submit_form':
-            // Traitement du formulaire
-              // Récupération et validation des données
-  $nom = cleanInput($_POST['firstName'] ?? '') . ' ' . cleanInput($_POST['lastName'] ?? '');
-  $email = cleanInput($_POST['email'] ?? '');
-  $telephone = cleanInput($_POST['phone'] ?? '');
-  $formation = "Formation Développement Web Gratuite";
-  $location = cleanInput($_POST['location'] ?? '');
-  $source = cleanInput($_POST['source'] ?? '');
-  $niveau_experience = cleanInput($_POST['experience'] ?? '');
-  $motivation = cleanInput($_POST['motivation'] ?? '');
+      case 'submit_form':
+        // Traitement du formulaire
+        // Récupération et validation des données
+        $nom = cleanInput($_POST['firstName'] ?? '') . ' ' . cleanInput($_POST['lastName'] ?? '');
+        $email = cleanInput($_POST['email'] ?? '');
+        $telephone = cleanInput($_POST['phone'] ?? '');
+        $formation = "Formation Développement Web Gratuite";
+        $location = cleanInput($_POST['location'] ?? '');
+        $source = cleanInput($_POST['source'] ?? '');
+        $niveau_experience = cleanInput($_POST['experience'] ?? '');
+        $motivation = cleanInput($_POST['motivation'] ?? '');
 
-  // Combiner niveau d'expérience et motivation dans le message
-  $message = "Niveau d'expérience: $niveau_experience\n\nMotivation:\n$motivation";
+        // Combiner niveau d'expérience et motivation dans le message
+        $message = "Niveau d'expérience: $niveau_experience\n\nMotivation:\n$motivation";
 
-  // Validation des données obligatoires
-  $errors = [];
-  if (empty($nom)) $errors[] = "Le nom est obligatoire";
-  if (empty($email)) $errors[] = "L'email est obligatoire";
-  if (empty($telephone)) $errors[] = "Le téléphone est obligatoire";
+        // Validation des données obligatoires
+        $errors = [];
+        if (empty($nom)) $errors[] = "Le nom est obligatoire";
+        if (empty($email)) $errors[] = "L'email est obligatoire";
+        if (empty($telephone)) $errors[] = "Le téléphone est obligatoire";
 
-  if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    $errors[] = "L'adresse email est invalide";
-  }
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+          $errors[] = "L'adresse email est invalide";
+        }
 
-  if (!isset($_POST['terms']) || $_POST['terms'] !== 'on') {
-    $errors[] = "Vous devez accepter les conditions d'utilisation";
-  }
+        if (!isset($_POST['terms']) || $_POST['terms'] !== 'on') {
+          $errors[] = "Vous devez accepter les conditions d'utilisation";
+        }
 
-  if (count($errors) > 0) {
-    sendJsonResponse(false, implode("<br>", $errors));
-  }
+        if (count($errors) > 0) {
+          sendJsonResponse(false, implode("<br>", $errors));
+        }
 
-  // Insertion dans la base de données
-  try {
-    $stmt = $pdo->prepare("
+        // Insertion dans la base de données
+        try {
+          $stmt = $pdo->prepare("
             INSERT INTO inscriptions (
                 nom, email, telephone, formation, message, 
                 location, source, date_inscription
@@ -265,78 +266,78 @@ if (isset($_POST['action'])) {
             )
         ");
 
-    $stmt->bindParam(':nom', $nom, PDO::PARAM_STR);
-    $stmt->bindParam(':email', $email, PDO::PARAM_STR);
-    $stmt->bindParam(':telephone', $telephone, PDO::PARAM_STR);
-    $stmt->bindParam(':formation', $formation, PDO::PARAM_STR);
-    $stmt->bindParam(':message', $message, PDO::PARAM_STR);
-    $stmt->bindParam(':location', $location, PDO::PARAM_STR);
-    $stmt->bindParam(':source', $source, PDO::PARAM_STR);
+          $stmt->bindParam(':nom', $nom, PDO::PARAM_STR);
+          $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+          $stmt->bindParam(':telephone', $telephone, PDO::PARAM_STR);
+          $stmt->bindParam(':formation', $formation, PDO::PARAM_STR);
+          $stmt->bindParam(':message', $message, PDO::PARAM_STR);
+          $stmt->bindParam(':location', $location, PDO::PARAM_STR);
+          $stmt->bindParam(':source', $source, PDO::PARAM_STR);
 
-    $stmt->execute();
+          $stmt->execute();
 
-    $inscription_id = $pdo->lastInsertId();
-  } catch (PDOException $e) {
-    error_log('Database error: ' . $e->getMessage());
-    sendJsonResponse(false, 'Erreur lors de la sauvegarde en base de données. Veuillez réessayer.');
-  }
-
-
-  $participantName   = $nom;
-  $formationName     = $formation;
-  $formationDate     = date("Y-m-d");
-  $dateObj = new DateTime($formationDate);
-  $dateObj->modify('+2 months');
-  $issueDate = $dateObj->format('Y-m-d');
+          $inscription_id = $pdo->lastInsertId();
+        } catch (PDOException $e) {
+          error_log('Database error: ' . $e->getMessage());
+          sendJsonResponse(false, 'Erreur lors de la sauvegarde en base de données. Veuillez réessayer.');
+        }
 
 
-  // Génération de l'ID
-  $certificateId = generateCertificateId();
+        $participantName   = $nom;
+        $formationName     = $formation;
+        $formationDate     = date("Y-m-d");
+        $dateObj = new DateTime($formationDate);
+        $dateObj->modify('+2 months');
+        $issueDate = $dateObj->format('Y-m-d');
 
-  // Insertion dans la table certificates
-$sql = "INSERT INTO certificates 
+
+        // Génération de l'ID
+        $certificateId = generateCertificateId();
+
+        // Insertion dans la table certificates
+        $sql = "INSERT INTO certificates 
         (certificate_id, participant_name, formation_name, formation_date, issue_date, inscription_id)
         VALUES (:certificate_id, :participant_name, :formation_name, :formation_date, :issue_date, :inscription_id)";
 
-$stmt = $pdo->prepare($sql);
-$stmt->execute([
-    ":certificate_id"   => $certificateId,
-    ":participant_name" => $participantName,
-    ":formation_name"   => $formationName,
-    ":formation_date"   => $formationDate,
-    ":issue_date"       => $issueDate,
-    ":inscription_id"   => $inscription_id
-]);
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([
+          ":certificate_id"   => $certificateId,
+          ":participant_name" => $participantName,
+          ":formation_name"   => $formationName,
+          ":formation_date"   => $formationDate,
+          ":issue_date"       => $issueDate,
+          ":inscription_id"   => $inscription_id
+        ]);
 
 
-  // ENVOI DES EMAILS
-  // ----------------
-  $email_admin_sent = sendAdminEmail(
-    $admin_email,
-    $site_email,
-    $inscription_id,
-    $nom,
-    $email,
-    $telephone,
-    $formation,
-    $message,
-    $location,
-    $source
-  );
+        // ENVOI DES EMAILS
+        // ----------------
+        $email_admin_sent = sendAdminEmail(
+          $admin_email,
+          $site_email,
+          $inscription_id,
+          $nom,
+          $email,
+          $telephone,
+          $formation,
+          $message,
+          $location,
+          $source
+        );
 
-  $email_user_sent = sendUserConfirmationEmail(
-    $email,
-    $site_email,
-    $inscription_id,
-    $nom,
-    $formation,
-    $certificateId
-  );
+        $email_user_sent = sendUserConfirmationEmail(
+          $email,
+          $site_email,
+          $inscription_id,
+          $nom,
+          $formation,
+          $certificateId
+        );
 
-  // RÉPONSE AU FRONTEND
-  // -------------------
-  if ($inscription_id && $email_admin_sent && $email_user_sent) {
-    echo "
+        // RÉPONSE AU FRONTEND
+        // -------------------
+        if ($inscription_id && $email_admin_sent && $email_user_sent) {
+          echo "
     <!DOCTYPE html>
     <html lang='fr'>
     <head>
@@ -357,8 +358,8 @@ $stmt->execute([
         </script>
     </body>
     </html>";
-  } elseif ($inscription_id) {
-    echo "
+        } elseif ($inscription_id) {
+          echo "
     <!DOCTYPE html>
     <html lang='fr'>
     <head>
@@ -379,8 +380,8 @@ $stmt->execute([
         </script>
     </body>
     </html>";
-  } else {
-    echo "
+        } else {
+          echo "
     <!DOCTYPE html>
     <html lang='fr'>
     <head>
@@ -401,55 +402,79 @@ $stmt->execute([
         </script>
     </body>
     </html>";
-  }
-            break;
-        case 'verify_certificate':
-            verifyCertificate($pdo, $_POST['certificate_id']);
-            break;
-        case 'validate_certificate':
-    $certificateId = cleanInput($_POST['certificat_id'] ?? '');
-    $email = cleanInput($_POST['email'] ?? '');
+        }
+        break;
+      case 'verify_certificate':
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'verify_certificate') {
+          $certificateId = trim($_POST['certificate_id']);
 
-    if (empty($certificateId) || empty($email)) {
-        sendJsonResponse(false, "Veuillez remplir tous les champs.");
-    }
+          if ($certificateId) {
+            $cert = verifyCertificate($pdo, $certificateId);
 
-    try {
-        $stmt = $pdo->prepare("
+            if ($cert) {
+              echo json_encode([
+                'success' => true,
+                'data' => $cert
+              ]);
+            } else {
+              echo json_encode([
+                'success' => false,
+                'message' => 'Numéro de certificat introuvable'
+              ]);
+            }
+          } else {
+            echo json_encode([
+              'success' => false,
+              'message' => 'Aucun numéro fourni'
+            ]);
+          }
+        }
+
+
+        break;
+      case 'validate_certificate':
+        $certificateId = cleanInput($_POST['certificat_id'] ?? '');
+        $email = cleanInput($_POST['email'] ?? '');
+
+        if (empty($certificateId) || empty($email)) {
+          sendJsonResponse(false, "Veuillez remplir tous les champs.");
+        }
+
+        try {
+          $stmt = $pdo->prepare("
             SELECT c.certificate_id, i.nom, i.formation
             FROM certificates c
             JOIN inscriptions i ON c.inscription_id = i.id
             WHERE c.certificate_id = :certificate_id AND i.email = :email
             LIMIT 1
         ");
-        $stmt->execute([
+          $stmt->execute([
             ':certificate_id' => $certificateId,
             ':email' => $email
-        ]);
+          ]);
 
-        $cert = $stmt->fetch(PDO::FETCH_ASSOC);
+          $cert = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if ($cert) {
+          if ($cert) {
             sendJsonResponse(true, "Certificat valide.", [
-                'participant_name' => $cert['nom'],
-                'formation_name' => $cert['formation'],
-                'certificate_id' => $cert['certificate_id']
+              'participant_name' => $cert['nom'],
+              'formation_name' => $cert['formation'],
+              'certificate_id' => $cert['certificate_id']
             ]);
-        } else {
+          } else {
             sendJsonResponse(false, "Certificat ou email invalide.");
+          }
+        } catch (PDOException $e) {
+          sendJsonResponse(false, "Erreur BDD : " . $e->getMessage());
         }
+        break;
 
-    } catch (PDOException $e) {
-        sendJsonResponse(false, "Erreur BDD : " . $e->getMessage());
+      default:
+        sendJsonResponse(false, 'Action non reconnue');
     }
-    break;
-
-        default:
-            sendJsonResponse(false, 'Action non reconnue');
-    }
-} else {
-  sendJsonResponse(false, 'Méthode non autorisée');
-}
+  } else {
+    sendJsonResponse(false, 'Méthode non autorisée');
+  }
 } // <-- Add this closing brace to properly close the main if ($_SERVER['REQUEST_METHOD'] === 'POST') block
 
 // $users = getAllUsers($pdo);
@@ -472,11 +497,11 @@ function generateCertificateId()
   $randomPart = str_pad(mt_rand(0, 999999999), 9, '0', STR_PAD_LEFT); // 9 chiffres aléatoires
   return "SPC-$year-$randomPart";
 }
-function verifyCertificate($pdo, $certificateId){
+
+
+function verifyCertificate($pdo, $certificateId)
+{
   $stmt = $pdo->prepare("SELECT * FROM certificates WHERE certificate_id = :certificate_id");
   $stmt->execute([':certificate_id' => $certificateId]);
   return $stmt->fetch(PDO::FETCH_ASSOC);
 }
-
-
-?>
